@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found – LaunchPad</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ffffff'/%3E%3Cpath d='M9 22V10h3v9h6v3H9z' fill='%23131209'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--base:#131209;--line:#313131;--fg:#F5F5F5;--fg2:#9B9B9B;--ease:cubic-bezier(0.22,1,0.36,1)}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var(--base);color:var(--fg);
+       font-family:'Geist',system-ui,sans-serif;font-size:16px;line-height:24px;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:680px;margin:0 auto;padding:0 16px;width:100%}
+  .top{padding:24px 0}
+  .top a{font-size:14px;line-height:20px;color:var(--fg2);transition:color 300ms var(--ease)}
+  .top a:hover{color:#fff}
+  main{flex:1;display:flex;align-items:center;padding:48px 0}
+  .code{font-size:128px;line-height:128px;font-weight:600;margin:0;
+        background:linear-gradient(to right,#FFFFFF,#9B9B9B);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h1{font-size:36px;line-height:40px;font-weight:600;margin:24px 0 0;text-wrap:balance}
+  p{color:var(--fg2);margin:16px 0 0;max-width:520px;text-wrap:pretty}
+  .btn{display:inline-flex;align-items:center;border:0;border-radius:12px;font-size:16px;line-height:24px;font-weight:600;
+       padding:8px 12px;background:#fff;color:#111;margin-top:32px;
+       transition:transform 300ms var(--ease),background 300ms var(--ease)}
+  .btn:hover{background:#E8E8E8}
+  .btn:active{transform:scale(.98)}
+  footer{border-top:1px solid var(--line);padding:48px 0}
+  footer p{font-size:12px;line-height:16px;color:var(--fg2);margin:0}
+  @media (max-width:640px){.code{font-size:96px;line-height:96px}h1{font-size:30px;line-height:36px}}
+</style>
+</head>
+<body>
+<div class="wrap top"><a href="index.html">← Back to LaunchPad</a></div>
+<main class="wrap">
+  <div>
+    <p class="code">404</p>
+    <h1>This page moved or never existed</h1>
+    <p>The link may be old, or the page may have been renamed. Head back to the home page and start from there.</p>
+    <a class="btn" href="index.html">Go to the home page</a>
+  </div>
+</main>
+<footer>
+  <div class="wrap"><p>© LaunchPad. All rights reserved.</p></div>
+</footer>
+</body>
+</html>

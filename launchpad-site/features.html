@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Features – LaunchPad</title>
+<meta name="description" content="Structure, copy, visual system, SEO, and export. See what LaunchPad builds into every landing page.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ffffff'/%3E%3Cpath d='M9 22V10h3v9h6v3H9z' fill='%23131209'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+<style>
+  :root{--base:#131209;--s1:#181818;--s3:#272727;--line:#313131;--fg:#F5F5F5;--fg2:#9B9B9B;--fg3:#6E6E6E;--ease:cubic-bezier(0.22,1,0.36,1)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--base);color:var(--fg);font-family:'Geist',system-ui,sans-serif;font-size:16px;line-height:24px;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{font-weight:600;margin:0;text-wrap:balance}
+  p{margin:0;text-wrap:pretty}
+  :focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:4px}
+  .skip{position:absolute;left:-9999px;top:0;background:#fff;color:#111;padding:8px 12px;z-index:100}
+  .skip:focus{left:16px;top:16px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+  .btn{display:inline-flex;align-items:center;border:0;border-radius:12px;font-size:16px;line-height:24px;font-weight:600;
+       padding:8px 12px;background:#fff;color:#111;transition:transform 300ms var(--ease),background 300ms var(--ease)}
+  .btn:hover{background:#E8E8E8}
+  .btn:active{transform:scale(.98)}
+  nav.top{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:24px;
+          padding:8px 8px 8px 16px;border-radius:16px;background:rgba(24,24,24,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+  nav.top .brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;line-height:20px}
+  nav.top .brand svg{width:20px;height:20px}
+  nav.top .links{display:flex;gap:24px;font-size:14px;line-height:20px;font-weight:500;color:var(--fg2)}
+  nav.top .links a{transition:color 300ms var(--ease)}
+  nav.top .links a:hover,nav.top .links a[aria-current="page"]{color:#fff}
+  .hero{padding:160px 0 64px;text-align:center}
+  .kicker{font-size:12px;line-height:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fg3);margin-bottom:16px}
+  h1{font-size:60px;line-height:60px;max-width:680px;margin:0 auto;
+     background:linear-gradient(to right,#FFFFFF,#9B9B9B);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:18px;line-height:28px;color:var(--fg2);max-width:680px;margin:24px auto 0}
+  main{padding-bottom:96px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px}
+  .card{background:var(--s1);border:1px solid var(--line);border-radius:16px;padding:24px;
+        transition:transform 500ms var(--ease),border-color 300ms var(--ease)}
+  .card:hover{transform:translateY(-2px);border-color:#3A3A3A}
+  .card i{font-size:24px;display:block;margin-bottom:16px}
+  .card h3{font-size:18px;line-height:28px;font-weight:500;margin-bottom:8px}
+  .card p{font-size:14px;line-height:20px;color:var(--fg2)}
+  .band{text-align:center;background:var(--s1);padding:96px 0;margin-top:96px}
+  .band h2{font-size:48px;line-height:48px;max-width:680px;margin:0 auto}
+  .band p{color:var(--fg2);margin:16px auto 0;max-width:680px}
+  .band .btn{margin-top:32px}
+  footer{border-top:1px solid var(--line);padding:48px 0}
+  .foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px}
+  .foot nav{display:flex;gap:24px;font-size:14px;line-height:20px;color:var(--fg2)}
+  .foot nav a:hover{color:#fff}
+  .foot p{font-size:12px;line-height:16px;color:var(--fg3)}
+  @media (max-width:820px){
+    nav.top .links,nav.top .btn{display:none}
+    h1{font-size:48px;line-height:48px}
+    .grid{grid-template-columns:1fr}
+    .band h2{font-size:36px;line-height:40px}
+  }
+  @media (max-width:420px){h1{font-size:36px;line-height:40px}}
+  @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<nav class="top" aria-label="Main">
+  <a class="brand" href="index.html" aria-label="LaunchPad home">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#fff"/><path d="M9 22V10h3v9h6v3H9z" fill="#131209"/></svg>
+    LaunchPad
+  </a>
+  <div class="links">
+    <a href="features.html" aria-current="page">Features</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="index.html#faq">FAQ</a>
+  </div>
+  <a class="btn" href="index.html#signup">Start free trial</a>
+</nav>
+
+<main id="main">
+  <header class="hero">
+    <div class="wrap">
+      <p class="kicker">Features</p>
+      <h1>Everything the page needs, nothing it does not</h1>
+      <p class="sub">Each feature exists to move one visitor closer to one action.</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="grid">
+      <div class="card"><i class="ph ph-layout" aria-hidden="true"></i><h3>Structure that converts</h3><p>Hero, benefits, proof, FAQ, and final call to action in the order visitors expect.</p></div>
+      <div class="card"><i class="ph ph-pencil-simple" aria-hidden="true"></i><h3>Copy in your voice</h3><p>Real sentences drafted for your audience, with no filler and no placeholder Latin.</p></div>
+      <div class="card"><i class="ph ph-swatches" aria-hidden="true"></i><h3>A visual system you can keep</h3><p>Type, spacing, radius, and motion tokens applied the same way on every page.</p></div>
+      <div class="card"><i class="ph ph-magnifying-glass" aria-hidden="true"></i><h3>Search ready</h3><p>Title, meta description, FAQ answers, and schema generated alongside the page.</p></div>
+      <div class="card"><i class="ph ph-circle-notch" aria-hidden="true"></i><h3>Every state, designed</h3><p>Loading, empty, error, and success screens that look like part of the product.</p></div>
+      <div class="card"><i class="ph ph-export" aria-hidden="true"></i><h3>Clean export</h3><p>Take the HTML and CSS into your own codebase with no lock in.</p></div>
+    </div>
+  </div>
+
+  <section class="band">
+    <div class="wrap">
+      <h2>Build the next page in minutes</h2>
+      <p>Free trial, no credit card, cancel anytime.</p>
+      <a class="btn" href="index.html#signup">Start free trial</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <p>© <span id="year">2026</span> LaunchPad. All rights reserved.</p>
+    <nav aria-label="Legal">
+      <a href="index.html">Home</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </nav>
+  </div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

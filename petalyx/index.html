@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Petalyx — Benchmark all AI staff</title>
+<meta name="description" content="Benchmark the impact of all your AI staff.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#121410;
+  --olive:#4d6a10;
+  --green:#6f9a0c;
+  --lime:#b4cd52;
+  --pill:#e7efcf;
+  --line:#eef0ea;
+  --bg:#fff;
+  --radius:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#e9eee0}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{
+  font-family:"Inter Tight",system-ui,sans-serif;
+  color:var(--ink);background:transparent;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img,video{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+/* ---------- shared ---------- */
+.pill{
+  display:inline-flex;align-items:center;
+  font-size:11px;font-weight:500;padding:5px 10px;border-radius:999px;
+  background:var(--pill);color:#2c3a10;letter-spacing:.01em;
+}
+.h2{
+  font-size:clamp(26px,3.1vw,44px);font-weight:400;
+  letter-spacing:-.03em;line-height:1.12;text-align:center;
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  height:36px;padding:0 16px;border-radius:999px;
+  background:var(--olive);color:#f3f8e4;
+  font-size:13px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 2px 6px rgba(60,80,10,.25);
+  transition:transform .3s,background .3s;
+}
+.btn:hover{transform:translateY(-1px);background:#5a7c14}
+.w{display:inline-block;will-change:transform,filter,opacity}
+.glass{
+  position:absolute;aspect-ratio:1;border-radius:12px;
+  background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.55);
+  -webkit-backdrop-filter:blur(10px) saturate(1.2);
+  backdrop-filter:blur(10px) saturate(1.2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4);
+}
+.grid-sq{position:absolute;border:1px solid #edf0e8;border-radius:10px;pointer-events:none}
+@keyframes driftA{to{transform:translateX(26px) translateY(4px)}}
+@keyframes driftB{to{transform:translateX(-30px) translateY(6px)}}
+.drift-a{animation:driftA 14s ease-in-out infinite alternate}
+.drift-b{animation:driftB 17s ease-in-out infinite alternate}
+
+/* ---------- intro shell ---------- */
+.backdrop{
+  position:fixed;inset:-40px;z-index:0;
+  background:url("https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261021_093215_b7826239-e451-4e15-b42b-d6bcf9497a32.png") center 70%/cover no-repeat;
+  filter:blur(18px) saturate(1.1);
+  transform:scale(1.3);
+}
+#app{
+  position:relative;z-index:1;background:#fff;
+  transform-origin:50% 50vh;overflow:clip;
+}
+body.intro #app{transform:scale(.9);border-radius:28px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;height:100vh;min-height:620px;overflow:hidden;background:#fff}
+.nav{
+  position:absolute;top:22px;left:50%;transform:translateX(-50%);z-index:20;
+  display:flex;align-items:center;gap:44px;
+  padding:5px 5px 5px 16px;border-radius:999px;
+  background:rgba(255,255,255,.9);
+  box-shadow:0 0 0 1px rgba(0,0,0,.05),0 6px 18px rgba(0,0,0,.06);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  white-space:nowrap;
+}
+.brand{
+  display:flex;align-items:center;gap:6px;
+  font-size:22px;font-weight:500;letter-spacing:-.04em;
+}
+.brand svg{width:30px;height:22px;flex:0 0 auto}
+.cloud{position:absolute;z-index:1;pointer-events:none}
+.cloud img{width:100%}
+.cloud-l{top:-3%;left:-5%;width:min(44vw,640px)}
+.cloud-r{top:2%;right:-6%;width:min(42vw,620px)}
+.hero h1{
+  position:absolute;z-index:6;top:31%;left:0;right:0;
+  text-align:center;
+  font-size:clamp(34px,5.2vw,76px);font-weight:400;
+  letter-spacing:-.045em;line-height:1.04;
+  padding:0 16px;
+}
+.hero h1 em{color:var(--olive);font-style:italic;font-weight:500}
+.hero-media{
+  position:absolute;left:0;right:0;bottom:0;height:72%;z-index:2;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 22%);
+  mask-image:linear-gradient(to bottom,transparent 0,#000 22%);
+}
+.hero-media video{width:100%;height:100%;object-fit:cover;object-position:center 70%}
+.hero-glass{position:absolute;inset:0;z-index:5;pointer-events:none}
+
+/* ---------- stats ---------- */
+.stats{position:relative;height:100vh;min-height:680px;overflow:hidden;background:#fff}
+.tree-wrap{
+  position:absolute;z-index:2;left:50%;transform:translateX(-50%);
+  bottom:-2%;width:min(340px,58vw);
+}
+.tree-wrap img{width:100%}
+.stats-inner{
+  position:relative;z-index:3;height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:22px;padding:0 16px;
+}
+.stats-inner .h2{margin-bottom:18px}
+.cards{
+  position:relative;z-index:4;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  width:min(880px,100%);
+}
+.card{
+  height:150px;padding:18px 22px;border-radius:22px;background:var(--lime);
+  display:flex;flex-direction:column;justify-content:space-between;
+  -webkit-mask:
+    radial-gradient(circle 17px at 0 55%,#0000 97%,#000) left/51% 100% no-repeat,
+    radial-gradient(circle 17px at 100% 55%,#0000 97%,#000) right/51% 100% no-repeat;
+  mask:
+    radial-gradient(circle 17px at 0 55%,#0000 97%,#000) left/51% 100% no-repeat,
+    radial-gradient(circle 17px at 100% 55%,#0000 97%,#000) right/51% 100% no-repeat;
+}
+.card small{font-size:10.5px;font-weight:500;color:#2a3410}
+.card b{
+  font-size:clamp(30px,3.4vw,44px);font-weight:600;letter-spacing:-.04em;
+  color:#151a08;font-variant-numeric:tabular-nums;line-height:1;
+}
+.cards-shadow{
+  position:relative;z-index:3;
+  width:min(820px,94%);height:10px;margin-top:-18px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(0,0,0,.08),transparent);
+}
+.logos-wrap{position:relative;width:min(860px,100%);display:flex;justify-content:center}
+.band{
+  position:absolute;z-index:5;left:50%;top:-6px;transform:translateX(-50%);
+  width:min(340px,58vw);height:64px;
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  background:rgba(255,255,255,.12);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);
+}
+.logos{
+  position:relative;z-index:6;
+  display:flex;justify-content:space-between;align-items:center;gap:24px;
+  width:min(860px,100%);padding:6px 10px;color:#151515;
+}
+.logos span{
+  display:flex;align-items:center;gap:6px;
+  font-size:21px;font-weight:700;letter-spacing:-.03em;white-space:nowrap;
+}
+.logos svg{flex:0 0 auto}
+
+/* ---------- loop ---------- */
+.loop{position:relative;height:100vh;min-height:680px;overflow:hidden;background:#fff}
+.loop-cloud{position:absolute;z-index:3;top:4vh;left:-4vw;width:min(36vw,520px);pointer-events:none}
+.loop-cloud > img{width:100%}
+.loop-head{
+  position:absolute;z-index:4;top:9vh;left:0;right:0;
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+  padding:0 16px;text-align:center;
+}
+.track{position:absolute;z-index:2;inset:0;display:flex}
+.panel{
+  position:relative;flex:0 0 clamp(96px,11vw,170px);height:100%;
+  overflow:hidden;border-right:1px solid var(--line);
+  cursor:pointer;outline:none;
+  transition:flex-grow .9s cubic-bezier(.77,0,.18,1);
+}
+.panel:last-child{border-right:none}
+.panel.is-active{flex-grow:1;cursor:default}
+.panel-in{
+  position:absolute;left:clamp(14px,1.8vw,28px);bottom:10vh;
+  display:flex;align-items:flex-end;gap:clamp(16px,2vw,30px);
+  width:max-content;
+}
+.num{font-size:clamp(170px,36vh,380px);font-weight:600;line-height:.74;letter-spacing:-.07em}
+.panel:nth-child(1) .num{color:var(--olive)}
+.panel:nth-child(2) .num{color:var(--green)}
+.panel:nth-child(3) .num{color:var(--lime)}
+.step{
+  position:relative;width:min(400px,30vw);padding-bottom:4px;
+  opacity:0;transform:translateX(-24px);filter:blur(6px);
+  transition:opacity .4s,transform .5s,filter .4s;
+}
+.panel.is-active .step{
+  opacity:1;transform:none;filter:none;
+  transition:opacity .7s .4s,transform .9s .35s cubic-bezier(.2,.8,.2,1),filter .7s .4s;
+}
+.step h3{font-size:clamp(20px,1.7vw,26px);font-weight:400;letter-spacing:-.03em;margin-bottom:12px}
+.step p{font-size:14px;line-height:1.4;color:#2b2e27}
+.mini-cloud{
+  position:absolute;left:-10%;bottom:calc(100% + clamp(70px,13vh,150px));
+  width:min(18vw,250px);max-width:none;
+  animation:driftA 9s ease-in-out infinite alternate;
+}
+
+/* ---------- cta ---------- */
+.cta{position:relative;height:110vh;min-height:720px;overflow:hidden;background:#fff}
+.cta-img{
+  position:absolute;left:0;right:0;bottom:0;height:78%;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 24%);
+  mask-image:linear-gradient(to bottom,transparent 0,#000 24%);
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  -webkit-mask-size:100% 100%;mask-size:100% 100%;
+}
+.cta-img img{width:100%;height:118%;object-fit:cover;object-position:center 60%}
+.petals{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+.petal{
+  position:absolute;top:-20px;width:10px;height:8px;
+  border-radius:80% 0 80% 0;background:#f6c4d6;opacity:.85;
+  animation:fall linear infinite;
+}
+@keyframes fall{to{transform:translate(var(--dx),110vh) rotate(540deg)}}
+.cta-card{
+  position:absolute;z-index:4;left:50%;top:30%;transform:translateX(-50%);
+  width:min(680px,calc(100% - 32px));
+  padding:46px 28px 54px;text-align:center;border-radius:26px;
+  background:linear-gradient(to bottom,rgba(255,255,255,.96) 0%,rgba(255,255,255,.75) 35%,rgba(255,255,255,.12) 100%);
+  border:1px solid rgba(255,255,255,.7);
+  -webkit-backdrop-filter:blur(16px) saturate(1.1);
+  backdrop-filter:blur(16px) saturate(1.1);
+  box-shadow:0 30px 60px rgba(10,20,60,.18);
+}
+.cta-card .h2{margin:16px 0 10px;font-size:clamp(24px,2.8vw,38px)}
+.cta-card p{font-size:14px;color:#1d2230;margin-bottom:20px}
+
+/* ---------- footer ---------- */
+#footer{
+  background:var(--lime);padding:34px 4vw 22px;
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;row-gap:22px;
+}
+.f-logo{width:72px;height:72px;overflow:visible;justify-self:start}
+.f-links{display:flex;gap:24px;font-size:13px;color:#1d240c;justify-self:center}
+.f-links a:hover{text-decoration:underline}
+.f-social{display:flex;gap:16px;justify-self:end}
+.f-social svg{width:18px;height:18px;display:block}
+.f-copy{grid-column:1/-1;text-align:center;font-size:11px;color:#2a330f}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .nav{gap:24px}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .card{height:120px}
+  .logos{flex-wrap:wrap;justify-content:center;gap:14px 26px}
+  .logos span{font-size:17px}
+  .stats{height:auto;min-height:100vh;padding:90px 0 300px}
+  .stats-inner{height:auto}
+  .tree-wrap{bottom:0}
+  .band{display:none}
+}
+@media (max-width:760px){
+  .hero{height:100svh;min-height:560px}
+  .hero h1{top:26%}
+  .hero-media{
+    height:66%;
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 14%);
+    mask-image:linear-gradient(to bottom,transparent 0,#000 14%);
+  }
+  .hero-media video{object-position:38% 100%;transform:scale(1.12);transform-origin:50% 100%}
+  .cloud-l{width:70vw;left:-18vw;top:6%}
+  .cloud-r{width:66vw;right:-20vw;top:10%}
+  .nav{top:16px;gap:18px;padding-left:12px}
+  .brand{font-size:19px}
+
+  .loop{height:auto;min-height:0;padding:12vh 0 40px}
+  .loop-head{position:relative;top:auto}
+  .loop-cloud{width:62vw;left:-14vw;top:2vh;opacity:.9}
+  .track{position:relative;inset:auto;flex-direction:column;margin-top:40px}
+  .panel{
+    flex:none;height:auto;overflow:visible;
+    border-right:none;border-top:1px solid var(--line);cursor:auto;
+  }
+  .panel-in{position:relative;left:auto;bottom:auto;width:auto;padding:28px 16px;gap:18px}
+  .num{font-size:150px}
+  .step{opacity:1;transform:none;filter:none;width:auto;transition:none}
+  .mini-cloud{display:none}
+
+  .cta{height:auto;min-height:0;padding:60px 0 0}
+  .cta-img{position:relative;height:92vh;min-height:620px}
+  .cta-img img{object-position:30% 60%}
+  .cta-card{top:120px;padding:34px 18px 42px}
+
+  #footer{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .f-logo{justify-self:center}
+  .f-links{justify-self:center;gap:18px;flex-wrap:wrap;justify-content:center}
+  .f-social{justify-self:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .drift-a,.drift-b,.petal,.mini-cloud{animation:none}
+}
+</style>
+</head>
+<body class="intro">
+
+<div class="backdrop" aria-hidden="true"></div>
+
+<div id="app">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <nav class="nav">
+      <a class="brand" href="#hero" aria-label="Petalyx home">
+        <svg viewBox="0 0 30 22" aria-hidden="true">
+          <circle cx="4" cy="17" r="3.6" fill="currentColor"/>
+          <path d="M10.5 18.5 16.8 5.2 25.5 18.5" fill="none" stroke="currentColor" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>petalyx</span>
+      </a>
+      <a class="btn" href="#cta">Start for $0</a>
+    </nav>
+
+    <div class="cloud cloud-l" data-par="-60" aria-hidden="true">
+      <img class="drift-a" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261021_093216_44218665-b15e-4566-a2d4-2676ab03609d.png" alt="">
+    </div>
+    <div class="cloud cloud-r" data-par="-90" aria-hidden="true">
+      <img class="drift-b" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261021_093215_0f37c0c3-f82c-485b-87dd-5a35b75a8782.png" alt="">
+    </div>
+
+    <h1 id="heroTitle" class="split">Benchmark the impact of<br>all your <em>AI staff.</em></h1>
+
+    <div class="hero-media">
+      <video id="heroVideo"
+             src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261021_093331_5998f443-1b9c-4b62-820c-8219c73c72c4.mp4"
+             poster="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261021_093215_b7826239-e451-4e15-b42b-d6bcf9497a32.png"
+             autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+    </div>
+
+    <div class="hero-glass" id="heroGlass" aria-hidden="true"></div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="stats" id="stats">
+    <div class="sq-field" data-count="22" aria-hidden="true"></div>
+
+    <div class="tree-wrap" aria-hidden="true">
+      <img id="tree" class="tree" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261021_093215_95f11900-c4a0-49ad-bb2d-bb927dd594ee.png" alt="">
+    </div>
+
+    <div class="stats-inner">
+      <span class="pill reveal">Teams rely on us</span>
+      <h2 class="h2 split">80,000+ flows<br>finished on autopilot.</h2>
+
+      <div class="cards">
+        <div class="card"><small>Staff Time Freed</small><b data-to="40" data-dec="0" data-suf="%">0%</b></div>
+        <div class="card"><small>Customers</small><b data-to="300" data-dec="0" data-suf="+">0+</b></div>
+        <div class="card"><small>Task Success Rates</small><b data-to="99.2" data-dec="1" data-suf="%">0%</b></div>
+        <div class="card"><small>Output Reliability</small><b data-to="99.2" data-dec="1" data-suf="%">0%</b></div>
+      </div>
+
+      <div class="cards-shadow"></div>
+
+      <div class="logos-wrap">
+        <div class="band" aria-hidden="true"></div>
+        <div class="logos">
+          <span>
+            <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" fill="currentColor">
+              <rect x="6.4" y="1.4" width="2.4" height="17.2" rx="1.2"/>
+              <rect x="11.2" y="1.4" width="2.4" height="17.2" rx="1.2"/>
+              <rect x="1.4" y="6.4" width="17.2" height="2.4" rx="1.2"/>
+              <rect x="1.4" y="11.2" width="17.2" height="2.4" rx="1.2"/>
+            </svg>
+            slack
+          </span>
+          <span style="font-weight:400">zapier</span>
+          <span>
+            <svg viewBox="0 0 20 18" width="20" height="18" aria-hidden="true" fill="currentColor">
+              <path d="M5 0 0 3.2l5 3.2 5-3.2L5 0Zm10 0-5 3.2 5 3.2 5-3.2L15 0ZM0 9.6l5 3.2 5-3.2-5-3.2-5 3.2Zm15-3.2-5 3.2 5 3.2 5-3.2-5-3.2ZM5 13.9l5 3.1 5-3.1-5-3.2-5 3.2Z"/>
+            </svg>
+            Dropbox
+          </span>
+          <span>HubSpot</span>
+          <span style="font-size:15px;font-weight:500">
+            <svg viewBox="0 0 18 18" width="15" height="15" aria-hidden="true">
+              <rect x="1" y="1" width="16" height="16" rx="3.4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M5.6 12.7V5.5l6.8 7.2V5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Notion
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LOOP ============ -->
+  <section class="loop" id="loop">
+    <div class="loop-cloud" data-par="-50" aria-hidden="true">
+      <img class="drift-a" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261021_093216_44218665-b15e-4566-a2d4-2676ab03609d.png" alt="">
+      <span class="glass" style="left:6%;top:30%;width:15%"></span>
+      <span class="glass" style="left:23%;top:58%;width:13%"></span>
+      <span class="glass" style="left:38%;top:24%;width:13%"></span>
+    </div>
+
+    <div class="loop-head">
+      <span class="pill reveal">Expert escalation</span>
+      <h2 class="h2 split">Humans take over only at<br>the crunch.</h2>
+    </div>
+
+    <div class="track" id="track">
+      <div class="panel is-active" tabindex="0" aria-label="Step 1: Ticket comes in">
+        <div class="panel-in">
+          <div class="num">1</div>
+          <div class="step">
+            <img class="mini-cloud" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261021_093215_0f37c0c3-f82c-485b-87dd-5a35b75a8782.png" alt="" aria-hidden="true">
+            <h3>Ticket comes in</h3>
+            <p>A shopper files a return claim with the purchase details, why it's going back, and any proof they can share.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" tabindex="0" aria-label="Step 2: Review record">
+        <div class="panel-in">
+          <div class="num">2</div>
+          <div class="step">
+            <img class="mini-cloud" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261021_093216_44218665-b15e-4566-a2d4-2676ab03609d.png" alt="" aria-hidden="true">
+            <h3>Review record</h3>
+            <p>Your agent scans the buyer profile, earlier purchases, prior returns, and any notable account events.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" tabindex="0" aria-label="Step 3: Apply the rules">
+        <div class="panel-in">
+          <div class="num">3</div>
+          <div class="step">
+            <img class="mini-cloud" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261021_093215_0f37c0c3-f82c-485b-87dd-5a35b75a8782.png" alt="" aria-hidden="true">
+            <h3>Apply the rules</h3>
+            <p>Your agent measures the claim against return terms, qualifying conditions, time limits, and edge cases.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta" id="cta">
+    <div class="sq-field" data-count="16" aria-hidden="true"></div>
+
+    <div class="cta-img">
+      <img id="ctaImg" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261021_093217_cc690198-ad8c-4127-8734-8485bd878351.png" alt="Moonlit cherry blossom valley">
+    </div>
+
+    <div class="petals" id="petals" aria-hidden="true"></div>
+
+    <div class="cta-card" id="ctaCard">
+      <span class="pill">Get started</span>
+      <h2 class="h2 split">Every hour your agents free up is gold.</h2>
+      <p class="reveal">Set up your first AI agent in minutes and see results on day one.</p>
+      <a class="btn reveal" href="#hero">Start for $0</a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer id="footer">
+    <svg class="f-logo" viewBox="0 0 80 80" overflow="visible" role="img" aria-label="Petalyx">
+      <circle id="fRing" cx="40" cy="40" r="37" fill="none" stroke="#111" stroke-width="2.4" stroke-dasharray="233" stroke-dashoffset="233" transform="rotate(-90 40 40)"/>
+      <circle class="fdot" cx="22" cy="40" r="4.5" fill="#111"/>
+      <circle class="fdot" cx="40" cy="40" r="4.5" fill="#111"/>
+      <circle class="fdot" cx="58" cy="40" r="4.5" fill="#111"/>
+      <path id="fMark" d="M33 53 43 31 56 53" fill="none" stroke="#111" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="60" stroke-dashoffset="60"/>
+    </svg>
+
+    <nav class="f-links" aria-label="Footer">
+      <a href="#stats">Toolkit</a>
+      <a href="#loop">Mission</a>
+      <a href="#cta">Help desk</a>
+      <a href="#footer">Terms</a>
+    </nav>
+
+    <div class="f-social">
+      <a href="#footer" aria-label="X">
+        <svg viewBox="0 0 18 18" aria-hidden="true">
+          <path fill="currentColor" d="M10.7 7.7 17 0h-1.5L10 6.7 5.6 0H0l6.6 9.6L0 18h1.5l5.9-7.4L12.4 18H18l-7.3-10.3Zm-2 2.5-.7-1L2 1.2h2.3l4.9 7 .7 1 6.4 9.1h-2.3l-5.2-7.6Z"/>
+        </svg>
+      </a>
+      <a href="#footer" aria-label="Instagram">
+        <svg viewBox="0 0 18 18" aria-hidden="true">
+          <rect x="1.1" y="1.1" width="15.8" height="15.8" rx="4.6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="9" cy="9" r="3.6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="13.4" cy="4.6" r="1.1" fill="currentColor"/>
+        </svg>
+      </a>
+      <a href="#footer" aria-label="LinkedIn">
+        <svg viewBox="0 0 18 18" aria-hidden="true" fill="currentColor">
+          <path d="M2.1 5.9h3.1V18H2.1V5.9ZM3.6 0a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6ZM7.1 5.9h3v1.7h.1c.4-.8 1.5-1.9 3.1-1.9 3.3 0 3.9 2.2 3.9 5V18h-3.1v-6.4c0-1.5 0-3.4-2.1-3.4s-2.4 1.6-2.4 3.3V18H7.1V5.9Z"/>
+        </svg>
+      </a>
+    </div>
+
+    <p class="f-copy">© 2026 Petalyx. All rights reserved.</p>
+  </footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  gsap.registerPlugin(ScrollTrigger);
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isMobile = window.innerWidth <= 760;
+
+  /* ---------- 1. split text into word spans ---------- */
+  function splitWords(root){
+    Array.prototype.slice.call(root.childNodes).forEach(function(node){
+      if(node.nodeType === 3){
+        var parts = node.textContent.split(/(\s+)/).filter(function(s){ return s !== ''; });
+        if(!parts.length) return;
+        var frag = document.createDocumentFragment();
+        parts.forEach(function(part){
+          if(/^\s+$/.test(part)){
+            frag.appendChild(document.createTextNode(' '));
+            return;
+          }
+          var span = document.createElement('span');
+          span.className = 'w';
+          span.textContent = part;
+          frag.appendChild(span);
+        });
+        root.replaceChild(frag, node);
+      } else if(node.nodeType === 1 && node.tagName !== 'BR'){
+        splitWords(node);
+      }
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.split'), splitWords);
+
+  /* ---------- 2. faint grid squares ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll('.sq-field'), function(field){
+    var count = parseInt(field.getAttribute('data-count'), 10) || 0;
+    field.style.position = 'absolute';
+    field.style.inset = '0 0 auto 0';
+    field.style.height = '42%';
+    field.style.zIndex = '1';
+    field.style.pointerEvents = 'none';
+    field.style.webkitMaskImage = 'linear-gradient(#000,transparent)';
+    field.style.maskImage = 'linear-gradient(#000,transparent)';
+
+    for(var i = 0; i < count; i++){
+      var sq = document.createElement('span');
+      sq.className = 'grid-sq';
+      var col = Math.floor(Math.random() * 30);
+      var row = Math.floor(Math.random() * 6);
+      sq.style.left = (col * 48 - 10) + 'px';
+      sq.style.top = (row * 48 + 6) + 'px';
+      sq.style.width = '46px';
+      sq.style.height = '46px';
+      field.appendChild(sq);
+
+      gsap.fromTo(sq, {opacity: 0}, {
+        opacity: 1,
+        duration: 1.2,
+        yoyo: true,
+        repeat: -1,
+        delay: Math.random() * 4,
+        repeatDelay: Math.random() * 3
+      });
+    }
+  });
+
+  /* ---------- 3. hero frosted squares ---------- */
+  var glassPos = [
+    [3,64],[3,71],[6.5,71],[10,71],[3,78],[-1,70],
+    [45.5,76],[49,80],[49,76],[52.5,76],
+    [86,58],[86,67],[82,76],[89.5,76],[86,84]
+  ];
+  var heroGlass = document.getElementById('heroGlass');
+  glassPos.forEach(function(pos, i){
+    var g = document.createElement('span');
+    g.className = 'glass';
+    g.style.left = pos[0] + '%';
+    g.style.top = pos[1] + '%';
+    g.style.width = (pos[0] > 40 && pos[0] < 60) ? 'clamp(28px,3.4vw,44px)' : 'clamp(36px,5.4vw,74px)';
+    if(isMobile && i % 2 === 1) g.style.display = 'none';
+    heroGlass.appendChild(g);
+  });
+
+  function startGlassFlicker(){
+    if(reduce) return;
+    gsap.to('#heroGlass .glass', {
+      opacity: .15,
+      duration: .9,
+      yoyo: true,
+      repeat: -1,
+      ease: 'sine.inOut',
+      delay: function(){ return Math.random() * 3; },
+      repeatDelay: function(){ return 1 + Math.random() * 3; }
+    });
+  }
+
+  /* ---------- 4. petals ---------- */
+  var petals = document.getElementById('petals');
+  for(var p = 0; p < 18; p++){
+    var petal = document.createElement('span');
+    petal.className = 'petal';
+    var scale = .6 + Math.random() * .8;
+    petal.style.left = (Math.random() * 100) + '%';
+    petal.style.setProperty('--dx', (Math.random() * 160 - 80) + 'px');
+    petal.style.animationDuration = (9 + Math.random() * 9) + 's';
+    petal.style.animationDelay = (-Math.random() * 15) + 's';
+    petal.style.width = (10 * scale) + 'px';
+    petal.style.height = (8 * scale) + 'px';
+    petals.appendChild(petal);
+  }
+
+  /* ---------- 5. smooth scroll ---------- */
+  var lenis = new Lenis({
+    duration: 1.25,
+    easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+    smoothWheel: true
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+
+  Array.prototype.forEach.call(document.querySelectorAll('a[href^="#"]'), function(a){
+    a.addEventListener('click', function(e){
+      var hash = a.getAttribute('href');
+      if(hash.length < 2) return;
+      var target = document.querySelector(hash);
+      if(!target) return;
+      e.preventDefault();
+
+      // The stats section is pinned for 120% of the viewport, which freezes the
+      // screen while a smooth scroll passes through it. Whenever a button click
+      // would cross that pinned range, jump past it first so the transition
+      // stays smooth in both directions.
+      var statsPin = ScrollTrigger.getAll().filter(function(t){
+        return !!t.vars.pin && String(t.vars.trigger) === '#stats';
+      })[0];
+      var pinStart = statsPin ? statsPin.start : 0;
+      var pinEnd = statsPin ? statsPin.end : 0;
+      var targetY = target.getBoundingClientRect().top + window.scrollY;
+      var crossing = pinStart > 0 && pinEnd > 0 &&
+        Math.min(window.scrollY, targetY) < pinEnd &&
+        Math.max(window.scrollY, targetY) > pinStart;
+      if (crossing) {
+        if (window.scrollY < targetY) {
+          lenis.scrollTo(pinEnd, { immediate: true });
+        } else {
+          lenis.scrollTo(pinStart, { immediate: true });
+        }
+      }
+
+      lenis.scrollTo(target, { duration: 1.6 });
+    });
+  });
+
+  /* ---------- 6. intro ---------- */
+  lenis.stop();
+
+  gsap.set('.nav', {x: 0, xPercent: -50, opacity: 0, y: -16});
+  gsap.set('#heroTitle .w', {opacity: 0, y: 24, filter: 'blur(10px)'});
+  gsap.set('#ctaCard', {x: 0, xPercent: -50});
+
+  var intro = gsap.timeline({
+    delay: .25,
+    onComplete: function(){
+      document.body.classList.remove('intro');
+      gsap.set('#app', {clearProps: 'all'});
+      var bd = document.querySelector('.backdrop');
+      if(bd) bd.remove();
+      lenis.start();
+      startGlassFlicker();
+      setupScroll();
+    }
+  });
+
+  intro
+    .fromTo('#app', {scale: .9, borderRadius: 28}, {scale: 1, borderRadius: 0, duration: 1.4, ease: 'expo.inOut'})
+    .to('.nav', {opacity: 1, y: 0, duration: .8, ease: 'power3.out'}, '-=.5')
+    .to('#heroTitle .w', {opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, stagger: .07, ease: 'power3.out'}, '-=.7')
+    .from('.cloud-l', {x: -120, opacity: 0, duration: 1.6, ease: 'power3.out'}, .4)
+    .from('.cloud-r', {x: 120, opacity: 0, duration: 1.6, ease: 'power3.out'}, .4)
+    .from('#heroGlass .glass', {
+      opacity: 0, scale: .6, duration: .6,
+      stagger: {each: .05, from: 'random'},
+      ease: 'back.out(2)'
+    }, '-=1');
+
+  /* ---------- 7. scroll setup ---------- */
+  function setupScroll(){
+    /* hero parallax */
+    var heroST = {trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true};
+
+    gsap.to('#heroTitle', {yPercent: -60, ease: 'none', scrollTrigger: heroST});
+    Array.prototype.forEach.call(document.querySelectorAll('.hero [data-par]'), function(el){
+      gsap.to(el, {
+        y: parseFloat(el.getAttribute('data-par')) * 2,
+        ease: 'none',
+        scrollTrigger: {trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true}
+      });
+    });
+    gsap.to('.hero-media', {
+      yPercent: 8, ease: 'none',
+      scrollTrigger: {trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true}
+    });
+
+    /* simple reveals */
+    Array.prototype.forEach.call(document.querySelectorAll('.reveal'), function(el){
+      gsap.from(el, {
+        opacity: 0, y: 16, duration: .8, ease: 'power3.out',
+        scrollTrigger: {trigger: el, start: 'top 85%'}
+      });
+    });
+
+    /* word reveals */
+    Array.prototype.forEach.call(document.querySelectorAll('#stats .split, #loop .split, #cta .split'), function(el){
+      gsap.from(el.querySelectorAll('.w'), {
+        opacity: 0, y: 22, filter: 'blur(8px)',
+        duration: .9, stagger: .06, ease: 'power3.out',
+        scrollTrigger: {trigger: el, start: 'top 80%'}
+      });
+    });
+
+    /* counters */
+    var countEls = document.querySelectorAll('.card b');
+    function setCounters(p){
+      Array.prototype.forEach.call(countEls, function(b){
+        var to = parseFloat(b.getAttribute('data-to'));
+        var dec = parseInt(b.getAttribute('data-dec'), 10);
+        var suf = b.getAttribute('data-suf') || '';
+        b.textContent = (to * p).toFixed(dec) + suf;
+      });
+    }
+
+    var mm = gsap.matchMedia();
+
+    /* desktop stats pin */
+    mm.add('(min-width:901px)', function(){
+      gsap.from('.cards .card', {
+        y: 40, opacity: 0, stagger: .08, duration: .8, ease: 'power3.out',
+        scrollTrigger: {trigger: '.cards', start: 'top 70%'}
+      });
+
+      var proxy = {p: 0};
+      var tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#stats',
+          start: 'top top',
+          end: '+=120%',
+          pin: true,
+          scrub: 1
+        }
+      });
+      tl.to(proxy, {
+        p: 1, ease: 'none', duration: 1,
+        onUpdate: function(){ setCounters(proxy.p); }
+      }, 0);
+      tl.fromTo('#tree', {yPercent: 75}, {yPercent: 6, ease: 'none', duration: 1}, 0);
+    });
+
+    /* compact stats */
+    mm.add('(max-width:900px)', function(){
+      gsap.from('.cards .card', {
+        y: 30, opacity: 0, stagger: .08, duration: .8, ease: 'power3.out',
+        scrollTrigger: {trigger: '.cards', start: 'top 85%'}
+      });
+
+      var proxy = {p: 0};
+      gsap.to(proxy, {
+        p: 1, duration: 2, ease: 'power2.out',
+        onUpdate: function(){ setCounters(proxy.p); },
+        scrollTrigger: {trigger: '.cards', start: 'top 80%', once: true}
+      });
+
+      gsap.fromTo('#tree', {yPercent: 40}, {
+        yPercent: 0, ease: 'none',
+        scrollTrigger: {trigger: '#stats', start: 'top bottom', end: 'bottom bottom', scrub: true}
+      });
+    });
+
+    /* accordion (desktop) */
+    mm.add('(min-width:761px)', function(){
+      var panels = gsap.utils.toArray('.panel');
+
+      panels.forEach(function(panel){
+        function activate(){
+          panels.forEach(function(p){ p.classList.toggle('is-active', p === panel); });
+        }
+        panel.addEventListener('mouseenter', activate);
+        panel.addEventListener('focus', activate);
+        panel.addEventListener('click', activate);
+      });
+
+      gsap.from('.panel-in', {
+        y: 120, opacity: 0, duration: 1.1, stagger: .12, ease: 'power3.out',
+        scrollTrigger: {trigger: '#loop', start: 'top 60%'}
+      });
+
+      gsap.to('.loop-cloud', {
+        x: 60, ease: 'none',
+        scrollTrigger: {trigger: '#loop', start: 'top bottom', end: 'bottom top', scrub: true}
+      });
+    });
+
+    /* accordion (stacked) */
+    mm.add('(max-width:760px)', function(){
+      gsap.utils.toArray('.panel').forEach(function(panel){
+        gsap.from(panel.querySelectorAll('.panel-in > *'), {
+          y: 40, opacity: 0, duration: .9, stagger: .1, ease: 'power3.out',
+          scrollTrigger: {trigger: panel, start: 'top 85%'}
+        });
+      });
+    });
+
+    /* cta */
+    gsap.fromTo('#ctaImg', {yPercent: -12}, {
+      yPercent: 0, ease: 'none',
+      scrollTrigger: {trigger: '#cta', start: 'top bottom', end: 'bottom bottom', scrub: true}
+    });
+    gsap.from('#ctaCard', {
+      y: 80, scale: .94, opacity: 0, filter: 'blur(10px)',
+      duration: 1.2, ease: 'power3.out',
+      scrollTrigger: {trigger: '#cta', start: 'top 60%'}
+    });
+
+    /* footer mark */
+    var dots = gsap.utils.toArray('.fdot');
+    var footTl = gsap.timeline({
+      scrollTrigger: {trigger: '#footer', start: 'top 92%', once: true}
+    });
+
+    footTl
+      .to(dots, {y: -8, duration: .25, stagger: .08, yoyo: true, repeat: 3, ease: 'sine.inOut'})
+      .to(dots, {attr: {cx: 27, cy: 50}, duration: .45, ease: 'power3.inOut'})
+      .to([dots[1], dots[2]], {opacity: 0, duration: .1})
+      .to('#fMark', {strokeDashoffset: 0, duration: .6, ease: 'power3.out'}, '-=.05')
+      .to(dots[0], {attr: {r: 5.5}, duration: .5, ease: 'back.out(3)'}, '<')
+      .to('#fRing', {strokeDashoffset: 0, duration: .9, ease: 'power2.inOut'}, '-=.3');
+
+    ScrollTrigger.refresh();
+  }
+
+  window.addEventListener('load', function(){ ScrollTrigger.refresh(); });
+})();
+</script>
+</body>
+</html>

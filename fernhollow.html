@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fernhollow</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23050604'/%3E%3Cpath d='M16 26V13M16 20c-4 0-6-2-6-5 4 0 6 2 6 5zm0-4c4 0 6-2 6-5-4 0-6 2-6 5z' stroke='%23f5efe2' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="description" content="A regenerative design studio. Wander through a night valley of flowers that grows as you move.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400&family=Manrope:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --u:min(calc(100vw/1600),calc(100vh/900));
+  --cream:#f5efe2;
+  --ink:#151510;
+  --line:rgba(245,239,226,.18);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --hero:url("https://commons.wikimedia.org/wiki/Special:FilePath/Reflection_light_of_a_Leucanthemum_meadow_in_a_full_moon_night%2C_Friedelhausen_2015-06-02.jpg?width=1920");
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:#050604}
+body{background:#050604;color:var(--cream);font-family:Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+img{display:block;max-width:100%}
+
+/* fixed valley background */
+#valley{position:fixed;inset:0;background:#050604 var(--hero) center/cover no-repeat;filter:brightness(.55) saturate(.85)}
+.js-canvas-container{position:absolute;inset:0}
+.js-canvas-container canvas{display:block;width:100%!important;height:100%!important}
+.lil-gui{display:none!important}
+.veil{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(0,0,0,.45) 0%,rgba(0,0,0,.25) 35%,rgba(5,6,4,.88) 72%,#050604 100%)}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;
+  background-image:radial-gradient(rgba(255,255,255,.5) .5px,transparent .5px);background-size:3px 3px}
+
+/* interface */
+.ui{position:relative;z-index:2;opacity:0;transition:opacity 1.6s ease}
+.ui.on{opacity:1}
+header{position:fixed;left:0;right:0;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+  padding:calc(24*var(--u)) calc(44*var(--u));transition:background .4s var(--ease),backdrop-filter .4s var(--ease)}
+header.scrolled{background:rgba(5,6,4,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.logo{font-size:calc(26*var(--u));font-weight:500;letter-spacing:-.02em}
+nav{display:flex;align-items:center;gap:calc(44*var(--u));font-size:calc(14.5*var(--u));font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+nav a:not(.pill){transition:opacity .2s}nav a:not(.pill):hover{opacity:.6}
+.pill{display:inline-flex;align-items:center;height:calc(46*var(--u));padding:0 calc(26*var(--u));border-radius:99px;background:var(--cream);color:var(--ink);transition:transform .25s var(--ease)}
+.pill:hover{transform:translateY(-1px)}
+
+/* hero */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:calc(120*var(--u)) calc(20*var(--u)) calc(80*var(--u))}
+h1{font:400 calc(158*var(--u))/.92 Antonio,"Arial Narrow",sans-serif;letter-spacing:-.012em;white-space:nowrap}
+.cap{margin-top:calc(48*var(--u));font-size:calc(20*var(--u));line-height:1.3}
+.go{display:grid;place-items:center;margin-top:calc(34*var(--u));width:calc(58*var(--u));height:calc(58*var(--u));
+  border:1.5px solid var(--cream);border-radius:50%;transition:background .3s,color .3s,transform .3s var(--ease)}
+.go:hover{background:var(--cream);color:var(--ink)}
+.go svg{width:calc(22*var(--u));height:calc(22*var(--u));fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.cue{position:absolute;left:50%;bottom:calc(44*var(--u));transform:translateX(-50%);display:flex;align-items:center;gap:calc(18*var(--u));
+  font-size:calc(12.5*var(--u));font-weight:500;letter-spacing:.16em;text-transform:uppercase;opacity:.8}
+.cue i{width:1px;height:calc(26*var(--u));background:rgba(245,239,226,.45);animation:drip 2.4s var(--ease) infinite}
+@keyframes drip{0%,100%{transform:scaleY(.4);opacity:.4}50%{transform:scaleY(1);opacity:1}}
+
+/* sections */
+main{position:relative;z-index:2}
+.sec{max-width:1200px;margin:0 auto;padding:calc(120*var(--u)) calc(44*var(--u))}
+.kicker{font-size:calc(12*var(--u));font-weight:500;letter-spacing:.18em;text-transform:uppercase;opacity:.55}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:calc(48*var(--u))}
+.sec-head h2{font:400 calc(64*var(--u))/1 Antonio,"Arial Narrow",sans-serif;letter-spacing:-.01em}
+.sec-head p{max-width:340px;font-size:calc(15*var(--u));line-height:1.6;opacity:.65}
+
+.work{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(24*var(--u))}
+.card{display:block}
+.card figure{position:relative;overflow:hidden;border-radius:12px;aspect-ratio:4/5;background:#0d0e0b}
+.card img{width:100%;height:100%;object-fit:cover;filter:brightness(.75) saturate(.8);transition:transform .9s var(--ease),filter .9s var(--ease)}
+.card:hover img{transform:scale(1.04);filter:brightness(.95) saturate(1)}
+.card .tag{position:absolute;left:12px;top:12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  padding:6px 10px;border:1px solid rgba(245,239,226,.35);border-radius:99px;background:rgba(5,6,4,.35);backdrop-filter:blur(6px)}
+.card h3{margin-top:16px;font-size:calc(20*var(--u));font-weight:500}
+.card p{margin-top:4px;font-size:calc(14*var(--u));opacity:.55}
+
+/* about */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:calc(64*var(--u));align-items:center}
+.about figure{border-radius:12px;overflow:hidden;aspect-ratio:4/5}
+.about img{width:100%;height:100%;object-fit:cover;filter:brightness(.8) saturate(.85)}
+.about h2{font:400 calc(56*var(--u))/1 Antonio,"Arial Narrow",sans-serif;margin:16px 0 24px}
+.about p{font-size:calc(16*var(--u));line-height:1.7;opacity:.72;margin-bottom:16px;max-width:46ch}
+.stats{display:flex;gap:calc(48*var(--u));margin-top:calc(40*var(--u));padding-top:calc(24*var(--u));border-top:1px solid var(--line)}
+.stats b{display:block;font:400 calc(40*var(--u))/1 Antonio,sans-serif}
+.stats span{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.5}
+
+/* journal */
+.rows{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:140px 1fr auto;gap:24px;align-items:center;padding:calc(28*var(--u)) 0;
+  border-bottom:1px solid var(--line);transition:padding-left .4s var(--ease)}
+.row:hover{padding-left:8px}
+.row time{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.45}
+.row h3{font-size:calc(24*var(--u));font-weight:500}
+.row p{font-size:calc(14*var(--u));opacity:.55;margin-top:4px}
+.row .arrow{font-size:20px;opacity:.5;transition:transform .4s var(--ease),opacity .4s}
+.row:hover .arrow{transform:translateX(6px);opacity:1}
+
+/* contact */
+.contact{text-align:center;padding:calc(140*var(--u)) calc(20*var(--u))}
+.contact h2{font:400 calc(96*var(--u))/1 Antonio,"Arial Narrow",sans-serif;letter-spacing:-.015em;margin:16px auto 32px;max-width:16ch}
+.contact .mail{display:inline-flex;align-items:center;gap:12px;font-size:calc(20*var(--u));padding-bottom:4px;border-bottom:1px solid var(--cream)}
+.contact .mail:hover{opacity:.7}
+
+/* footer */
+footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:calc(48*var(--u)) calc(44*var(--u))}
+.foot{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:flex-start}
+.foot nav{display:flex;gap:24px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;opacity:.6}
+.credits{font-size:11px;line-height:1.7;opacity:.38;max-width:520px}
+.credits a{text-decoration:underline;text-underline-offset:3px}
+
+/* sound */
+.sound-wrap{position:fixed;right:calc(44*var(--u));bottom:calc(44*var(--u));z-index:30}
+.sound{display:grid;place-items:center;width:calc(36*var(--u));height:calc(36*var(--u));border-radius:50%;
+  border:1px solid rgba(245,239,226,.3);background:rgba(5,6,4,.35);backdrop-filter:blur(10px);
+  transition:background .3s,transform .3s var(--ease)}
+.sound:hover{background:rgba(245,239,226,.12)}
+.sound:active{transform:scale(.96)}
+.sound svg{width:calc(16*var(--u));height:calc(16*var(--u));fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.sound .w{transition:opacity .3s}.sound[aria-pressed=false] .w{opacity:0}
+.sound[aria-pressed=true] .x{opacity:0}
+
+/* loader + reveal */
+.loader{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:#000;transition:opacity 1s ease;pointer-events:none}
+.loader.gone{opacity:0}
+.loader span{width:calc(9*var(--u));height:calc(9*var(--u));min-width:6px;min-height:6px;border-radius:50%;background:var(--cream);animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(.4);opacity:.4}}
+.rv{opacity:0;transform:translateY(32px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cream);outline-offset:3px}
+
+@media (max-width:820px){
+  :root{--u:1px}
+  header{padding:18px 18px 0}
+  nav a:not(.pill){display:none}
+  .pill{height:40px;padding:0 18px;font-size:12px}
+  .hero{padding:120px 20px 80px}
+  h1{font-size:clamp(64px,19vw,96px);white-space:normal}
+  .cap{font-size:17px}
+  .cue{right:20px;left:auto;bottom:30px;transform:none;font-size:11px}
+  .sec{padding:80px 20px}
+  .sec-head{flex-direction:column;align-items:flex-start}
+  .sec-head h2{font-size:44px}
+  .work{grid-template-columns:1fr}
+  .about{grid-template-columns:1fr;gap:40px}
+  .about h2{font-size:40px}
+  .stats{gap:32px}
+  .row{grid-template-columns:1fr auto;gap:8px 16px}
+  .row time{grid-column:1/-1}
+  .row p{display:none}
+  .contact h2{font-size:clamp(48px,14vw,72px)}
+  .sound-wrap{right:20px;bottom:24px}
+  footer{padding:40px 20px}
+  .foot{flex-direction:column}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .loader span,.cue i{animation:none}
+  .rv{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+<div id="valley" aria-hidden="true"><div class="js-canvas-container"></div></div>
+<div class="veil" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="ui" id="ui">
+  <header id="hdr">
+    <a class="logo" href="#top" aria-label="Fernhollow">Fernhollow</a>
+    <nav aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#journal">Journal</a>
+      <a class="pill" href="#contact">Let’s talk</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <h1>Grown, not built.</h1>
+      <p class="cap">Rooted in nature.<br>Built for what’s next.</p>
+      <a class="go" href="#work" id="go" aria-label="See our work"><svg viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+      <div class="cue"><span>Scroll to wander</span><i></i></div>
+    </section>
+
+    <section class="sec" id="work">
+      <div class="sec-head rv">
+        <div>
+          <p class="kicker">Selected work</p>
+          <h2>Places that grow back</h2>
+        </div>
+        <p>Landscapes, gardens, and quiet interiors designed to need less and return more each season.</p>
+      </div>
+      <div class="work">
+        <a class="card rv" href="#contact">
+          <figure>
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Dark_Wood_in_Tashkent_Botanical_Garden.jpg?width=1200" alt="Dark woodland understory at dusk">
+            <span class="tag">Garden</span>
+          </figure>
+          <h3>Hollow House</h3>
+          <p>Devon, 2025</p>
+        </a>
+        <a class="card rv" href="#contact">
+          <figure>
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Dark_Trees_In_Tashkent_Botanical_Garden.jpg?width=1200" alt="Tall dark trees in a botanical garden">
+            <span class="tag">Landscape</span>
+          </figure>
+          <h3>Nine Elms Meadow</h3>
+          <p>Somerset, 2024</p>
+        </a>
+        <a class="card rv" href="#contact">
+          <figure>
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Dark-Green_Leaves_in_Tashkent_Botanical_Garden.jpg?width=1200" alt="Deep green leaves in low light">
+            <span class="tag">Interior</span>
+          </figure>
+          <h3>The Green Room</h3>
+          <p>Lisbon, 2024</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="sec" id="about">
+      <div class="about">
+        <figure class="rv">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Night_in_a_Moonlit_Forest_(51144052194).jpg?width=1200" alt="Moonlit forest at night">
+        </figure>
+        <div class="rv">
+          <p class="kicker">About the studio</p>
+          <h2>We plant, then we wait</h2>
+          <p>Fernhollow is a small regenerative design studio working between landscape, interiors, and the slow systems that hold them together.</p>
+          <p>We start with what is already there. Soil, water, light, the people who will live with the result. Then we design the least that lets it thrive.</p>
+          <div class="stats">
+            <div><b>17</b><span>Projects grown</span></div>
+            <div><b>8.6</b><span>Years practicing</span></div>
+            <div><b>3</b><span>Bioregions</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="journal">
+      <div class="sec-head rv">
+        <div>
+          <p class="kicker">Journal</p>
+          <h2>Notes from the ground</h2>
+        </div>
+        <p>Field notes on slow design, repair, and the plants that do the work for us.</p>
+      </div>
+      <div class="rows">
+        <a class="row rv" href="#contact">
+          <time datetime="2026-09-18">18 Sep 2026</time>
+          <div><h3>What a meadow remembers</h3><p>On designing with succession instead of against it.</p></div>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="row rv" href="#contact">
+          <time datetime="2026-07-02">2 Jul 2026</time>
+          <div><h3>The case for doing less</h3><p>Three gardens that became easier to keep every year.</p></div>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="row rv" href="#contact">
+          <time datetime="2026-04-11">11 Apr 2026</time>
+          <div><h3>Reading water before drawing</h3><p>A walk through the drainage of a Devon hillside.</p></div>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <p class="kicker rv">Start a conversation</p>
+      <h2 class="rv">Let’s grow something that lasts.</h2>
+      <a class="mail rv" href="mailto:hello@fernhollow.studio">hello@fernhollow.studio <span aria-hidden="true">↗</span></a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="foot">
+      <div>
+        <p class="credits">
+          Photographs: <a href="https://commons.wikimedia.org/wiki/File:Reflection_light_of_a_Leucanthemum_meadow_in_a_full_moon_night,_Friedelhausen_2015-06-02.jpg" target="_blank" rel="noopener">night meadow</a> by Ludwig Sebastian Micheler (CC BY-SA 4.0); <a href="https://commons.wikimedia.org/wiki/File:Night_in_a_Moonlit_Forest_(51144052194).jpg" target="_blank" rel="noopener">moonlit forest</a> by Tero Karppinen (CC BY 2.0); <a href="https://commons.wikimedia.org/wiki/File:Dark_Wood_in_Tashkent_Botanical_Garden.jpg" target="_blank" rel="noopener">wood</a>, <a href="https://commons.wikimedia.org/wiki/File:Dark_Trees_In_Tashkent_Botanical_Garden.jpg" target="_blank" rel="noopener">trees</a>, and <a href="https://commons.wikimedia.org/wiki/File:Dark-Green_Leaves_in_Tashkent_Botanical_Garden.jpg" target="_blank" rel="noopener">leaves</a> by Humoyun Mehridinov (CC BY-SA 4.0). Changes: cropped and darkened.
+        </p>
+        <p class="credits" style="margin-top:12px">© <span id="year">2026</span> Fernhollow. Regenerative design studio.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#journal">Journal</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </footer>
+</div>
+
+<div class="sound-wrap">
+  <button class="sound" id="sound" aria-pressed="false" aria-label="Ambient sound"><svg viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5Z"/><path class="w" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path class="x" d="m16 10 4 4m0-4-4 4"/></svg></button>
+</div>
+
+<div class="loader" id="loader"><span></span></div>
+
+<script>
+(function () {
+  const loader = document.getElementById('loader');
+  const ui = document.getElementById('ui');
+  const sound = document.getElementById('sound');
+  const go = document.getElementById('go');
+  const hdr = document.getElementById('hdr');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- Original engine boot (runs only when the bundle is present) ----
+  function startEngine() {
+    if (!window.__GE || typeof window.__GE.et !== 'function' || !window.webpackChunk_N_E) return false;
+    try {
+      self.webpackChunk_N_E.push([[90001], {}, function (r) { window.__req = r; }]);
+      window.__req(889);
+      const Valley = window.__GE.et();
+      const audioStore = window.__GE.Y();
+      let introShown = false;
+      const valley = new Valley(document.getElementById('valley'),
+        () => loader.classList.add('gone'),
+        () => { if (!introShown) { introShown = true; ui.classList.add('on'); } });
+      audioStore().initAudio();
+      sound.onclick = () => {
+        const s = audioStore();
+        if (!s.isInitialized) return;
+        const muted = s.toggleMute();
+        sound.setAttribute('aria-pressed', String(!muted));
+      };
+      go.addEventListener('pointerenter', () => valley.startHoverTransition());
+      go.addEventListener('pointerleave', () => valley.stopHoverTransition());
+      return true;
+    } catch (err) {
+      console.warn('Fernhollow: engine boot failed, using fallback scene.', err);
+      return false;
+    }
+  }
+
+  // ---- Header state + reveals (always run) ----
+  const onScroll = () => hdr.classList.toggle('scrolled', window.scrollY > 40);
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  if (startEngine()) { document.getElementById('valley').style.backgroundImage = 'none'; return; }
+
+  // ---- Fallback: glowing field over the photograph ----
+  const host = document.querySelector('#valley .js-canvas-container');
+  const canvas = document.createElement('canvas');
+  host.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+
+  let w = 0, h = 0, dpr = 1;
+  const mouse = { x: -9999, y: -9999 };
+  let hovering = false, last = performance.now();
+  const flowers = [];
+
+  const sprite = document.createElement('canvas');
+  sprite.width = sprite.height = 64;
+  const sctx = sprite.getContext('2d');
+  const grad = sctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+  grad.addColorStop(0, 'rgba(245,239,226,1)');
+  grad.addColorStop(.25, 'rgba(245,239,226,.7)');
+  grad.addColorStop(.6, 'rgba(226,214,170,.2)');
+  grad.addColorStop(1, 'rgba(226,214,170,0)');
+  sctx.fillStyle = grad; sctx.fillRect(0, 0, 64, 64);
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = innerWidth; h = innerHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  const make = spread => ({ x: Math.random() * w, y: Math.random() * h, z: spread ? Math.random() : .02,
+    r: .55 + Math.random() * 1.4, sway: Math.random() * 6.28, speed: .01 + Math.random() * .025 });
+  function seed() { flowers.length = 0; const n = Math.min(320, Math.max(90, Math.round(w * h / 6500))); for (let i = 0; i < n; i++) flowers.push(make(true)); }
+
+  resize(); seed();
+  addEventListener('resize', () => { resize(); seed(); });
+  addEventListener('pointermove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  go.addEventListener('pointerenter', () => hovering = true);
+  go.addEventListener('pointerleave', () => hovering = false);
+
+  function frame(now) {
+    const dt = Math.min(48, now - last) / 16.67; last = now;
+    const t = now / 1000;
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+    for (const f of flowers) {
+      if (!reduced) { f.z += f.speed * dt * (hovering ? .12 : 1); if (f.z > 1) Object.assign(f, make(false)); }
+      const scale = .35 + f.z * 1.9;
+      let x = f.x + Math.sin(t * .4 + f.sway) * 6 * scale, y = f.y;
+      const dx = x - mouse.x, dy = y - mouse.y, dist = Math.hypot(dx, dy);
+      if (dist < 190 && dist > .01) { const p = (1 - dist / 190) * 34; x += dx / dist * p; y += dy / dist * p; }
+      if (hovering) { x += (f.x - w / 2) * .002 * dt; y += (f.y - h / 2) * .0012 * dt; }
+      const glow = .25 + f.z * .55 + (dist < 120 ? (1 - dist / 120) * .45 : 0);
+      const size = 5 + f.r * 7 * scale;
+      ctx.globalAlpha = Math.min(1, glow);
+      ctx.drawImage(sprite, x - size / 2, y - size / 2, size, size);
+    }
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  // ---- Ambient pad (fallback audio) ----
+  let audio = null;
+  function startAmbient() {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    const ac = new AC(), master = ac.createGain(), filter = ac.createBiquadFilter();
+    master.gain.value = 0;
+    filter.type = 'lowpass'; filter.frequency.value = 620; filter.Q.value = .6;
+    [110, 164.81, 220].forEach((freq, i) => {
+      const osc = ac.createOscillator(); osc.type = 'sine'; osc.frequency.value = freq; osc.detune.value = i === 1 ? 4 : -3;
+      const g = ac.createGain(); g.gain.value = .18 / (i + 1);
+      osc.connect(g).connect(filter); osc.start();
+    });
+    filter.connect(master).connect(ac.destination);
+    return { ac, master, on: false };
+  }
+  sound.addEventListener('click', () => {
+    if (!audio) audio = startAmbient();
+    if (!audio) return;
+    if (audio.ac.state === 'suspended') audio.ac.resume();
+    audio.on = !audio.on;
+    audio.master.gain.setTargetAtTime(audio.on ? .16 : 0, audio.ac.currentTime, .4);
+    sound.setAttribute('aria-pressed', String(audio.on));
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+  setTimeout(() => { loader.classList.add('gone'); ui.classList.add('on'); }, 700);
+})();
+</script>
+</body>
+</html>

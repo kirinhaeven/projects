@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LaunchPad – Landing pages that convert</title>
+<meta name="description" content="Answer a few questions and LaunchPad drafts your structure, copy, and visual system, then hands you a landing page ready to publish.">
+<meta property="og:title" content="LaunchPad – Landing pages that convert">
+<meta property="og:description" content="Structure, copy, and visual system for your next landing page.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ffffff'/%3E%3Cpath d='M9 22V10h3v9h6v3H9z' fill='%23131209'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+<style>
+  :root{
+    --base:#131209; --s1:#181818; --s2:#1F1F1F; --s3:#272727; --line:#313131;
+    --fg:#F5F5F5; --fg2:#9B9B9B; --fg3:#6E6E6E;
+    --ease:cubic-bezier(0.22,1,0.36,1);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--base);color:var(--fg);font-family:'Geist',system-ui,sans-serif;font-size:16px;line-height:24px;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4{font-weight:600;margin:0;text-wrap:balance}
+  p{margin:0;text-wrap:pretty}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer}
+  img{max-width:100%;display:block}
+  ::selection{background:#fff;color:#111}
+  :focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:4px}
+
+  .wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+  .skip{position:absolute;left:-9999px;top:0;background:#fff;color:#111;padding:8px 12px;z-index:100}
+  .skip:focus{left:16px;top:16px}
+
+  /* nav */
+  .nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:24px;
+       padding:8px 8px 8px 16px;border-radius:16px;background:rgba(24,24,24,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+  .nav .brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;line-height:20px}
+  .nav .brand svg{width:20px;height:20px}
+  .nav .links{display:flex;gap:24px;font-size:14px;line-height:20px;font-weight:500;color:var(--fg2)}
+  .nav .links a{transition:color 300ms var(--ease)}
+  .nav .links a:hover{color:#fff}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;
+       font-size:16px;line-height:24px;font-weight:600;padding:8px 12px;background:#fff;color:#111;
+       transition:transform 300ms var(--ease),background 300ms var(--ease)}
+  .btn:hover{background:#E8E8E8}
+  .btn:active{transform:scale(.98)}
+  .btn-ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
+  .btn-ghost:hover{background:var(--s3)}
+  .menu-btn{display:none;background:transparent;border:1px solid var(--line);border-radius:12px;width:40px;height:40px;
+            position:relative;align-items:center;justify-content:center}
+  .menu-btn span{position:absolute;left:11px;width:18px;height:2px;background:#fff;border-radius:2px;
+                 transition:transform 500ms var(--ease),opacity 300ms var(--ease)}
+  .menu-btn span:nth-child(1){transform:translateY(-6px)}
+  .menu-btn span:nth-child(3){transform:translateY(6px)}
+  .menu-btn[aria-expanded="true"] span:nth-child(1){transform:rotate(45deg)}
+  .menu-btn[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .menu-btn[aria-expanded="true"] span:nth-child(3){transform:rotate(-45deg)}
+
+  .mobile-menu{position:fixed;inset:0;z-index:40;background:rgba(19,18,9,.96);backdrop-filter:blur(24px);
+               display:flex;flex-direction:column;justify-content:center;padding:96px 24px 48px;
+               opacity:0;visibility:hidden;transition:opacity 500ms var(--ease),visibility 500ms}
+  .mobile-menu.open{opacity:1;visibility:visible}
+  .mobile-menu a{font-size:30px;line-height:36px;font-weight:600;padding:12px 0;color:var(--fg2);
+                 opacity:0;transform:translateY(24px);transition:opacity 500ms var(--ease),transform 500ms var(--ease),color 300ms var(--ease)}
+  .mobile-menu.open a{opacity:1;transform:translateY(0)}
+  .mobile-menu.open a:nth-child(1){transition-delay:60ms}
+  .mobile-menu.open a:nth-child(2){transition-delay:120ms}
+  .mobile-menu.open a:nth-child(3){transition-delay:180ms}
+  .mobile-menu.open a:nth-child(4){transition-delay:240ms}
+  .mobile-menu a:hover{color:#fff}
+
+  /* hero */
+  .hero{padding:160px 0 96px;text-align:center;background:var(--base)}
+  .hero h1{font-size:60px;line-height:60px;max-width:680px;margin:0 auto;
+           background:linear-gradient(to right,#FFFFFF,#9B9B9B);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .sub{font-size:18px;line-height:28px;color:var(--fg2);max-width:680px;margin:24px auto 0;font-weight:400}
+  .hero .cta{margin-top:32px;display:flex;justify-content:center}
+  .hero .proof{margin-top:24px;font-size:12px;line-height:16px;color:var(--fg3);font-weight:500}
+
+  .mock{margin:64px auto 0;max-width:880px;border-radius:16px;padding:8px;background:var(--s2);border:1px solid var(--line)}
+  .mock-inner{border-radius:8px;background:var(--s1);overflow:hidden}
+  .mock-bar{display:flex;gap:8px;padding:12px;border-bottom:1px solid var(--line)}
+  .mock-bar i{width:8px;height:8px;border-radius:50%;background:var(--line);display:block}
+  .mock-body{padding:24px;display:grid;gap:16px}
+  .mock-line{height:12px;border-radius:8px;background:var(--s3)}
+  .mock-line.w70{width:70%}.mock-line.w45{width:45%}.mock-line.w90{width:90%}
+  .mock-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+  .mock-card{height:64px;border-radius:8px;background:var(--s3)}
+
+  /* sections */
+  section{padding:96px 0}
+  .kicker{font-size:12px;line-height:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fg3);margin-bottom:16px}
+  .sec-title{font-size:36px;line-height:40px;max-width:680px}
+  .sec-sub{font-size:16px;line-height:24px;color:var(--fg2);max-width:680px;margin-top:16px}
+
+  .logos{display:flex;flex-wrap:wrap;justify-content:center;gap:48px;margin-top:48px;color:var(--fg3);
+         font-size:18px;line-height:28px;font-weight:500}
+  .logos span{opacity:.75;transition:opacity 300ms var(--ease)}
+  .logos span:hover{opacity:1}
+
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px}
+  .card{background:var(--s1);border:1px solid var(--line);border-radius:16px;padding:24px;
+        transition:transform 500ms var(--ease),border-color 300ms var(--ease)}
+  .card:hover{transform:translateY(-2px);border-color:#3A3A3A}
+  .card i{font-size:24px;color:#fff;display:block;margin-bottom:16px}
+  .card h3{font-size:18px;line-height:28px;font-weight:500;margin-bottom:8px}
+  .card p{font-size:14px;line-height:20px;color:var(--fg2)}
+
+  .tagline{padding:96px 0;text-align:center;background:var(--s1)}
+  .tagline p{font-size:48px;line-height:48px;max-width:680px;margin:0 auto}
+  .tagline .w{display:inline-block;color:var(--fg3);transition:color 500ms var(--ease)}
+  .tagline .w.on{color:var(--fg)}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;counter-reset:step}
+  .step{background:var(--s1);border:1px solid var(--line);border-radius:16px;padding:24px;counter-increment:step}
+  .step::before{content:counter(step);display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;
+                border-radius:8px;background:var(--s3);font-size:14px;font-weight:600;margin-bottom:16px}
+  .step h3{font-size:18px;line-height:28px;font-weight:500;margin-bottom:8px}
+  .step p{font-size:14px;line-height:20px;color:var(--fg2)}
+
+  .quote{background:var(--s1);border:1px solid var(--line);border-radius:16px;padding:32px;margin-top:48px;max-width:720px}
+  .quote p{font-size:18px;line-height:28px;color:var(--fg)}
+  .quote footer{margin-top:16px;font-size:14px;line-height:20px;color:var(--fg2)}
+
+  .faq{max-width:720px;margin:48px auto 0}
+  .faq details{border-bottom:1px solid var(--line);padding:16px 0}
+  .faq summary{list-style:none;cursor:pointer;font-size:16px;line-height:24px;font-weight:500;display:flex;justify-content:space-between;gap:16px;align-items:center}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary i{transition:transform 500ms var(--ease);color:var(--fg2);flex:none}
+  .faq details[open] summary i{transform:rotate(45deg)}
+  .faq p{margin-top:12px;font-size:14px;line-height:20px;color:var(--fg2)}
+
+  .final{background:var(--s1);text-align:center}
+  .final h2{font-size:48px;line-height:48px;max-width:680px;margin:0 auto}
+  .final p{margin:16px auto 0;max-width:680px;color:var(--fg2)}
+  .form{display:flex;gap:8px;justify-content:center;margin-top:32px;flex-wrap:wrap}
+  .form input{background:var(--base);border:1px solid var(--line);border-radius:12px;color:var(--fg);
+              font-size:16px;line-height:24px;padding:8px 12px;min-width:280px}
+  .form input::placeholder{color:var(--fg3)}
+  .form input:focus{outline:2px solid #fff;outline-offset:2px}
+  .form-msg{font-size:12px;line-height:16px;margin-top:12px;min-height:16px;color:var(--fg2)}
+  .form-msg.err{color:#FCA5A5}
+
+  footer.site{border-top:1px solid var(--line);padding:48px 0;background:var(--base)}
+  .foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px}
+  .foot nav{display:flex;gap:24px;font-size:14px;line-height:20px;color:var(--fg2)}
+  .foot nav a{transition:color 300ms var(--ease)}
+  .foot nav a:hover{color:#fff}
+  .foot p{font-size:12px;line-height:16px;color:var(--fg3)}
+
+  .cookie{position:fixed;left:16px;right:16px;bottom:16px;z-index:60;background:var(--s3);border:1px solid var(--line);
+          border-radius:16px;padding:16px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;
+          max-width:560px;margin:0 auto;font-size:14px;line-height:20px}
+  .cookie.hidden{display:none}
+
+  .nav .links a[aria-current="page"]{color:#fff}
+  .btn[disabled]{opacity:.6;cursor:wait}
+
+  .hero h1,.hero .sub,.hero .cta,.hero .proof,.hero .mock{opacity:0;transform:translateY(24px);
+    transition:opacity 700ms var(--ease),transform 700ms var(--ease)}
+  body.ready .hero h1{opacity:1;transform:none}
+  body.ready .hero .sub{opacity:1;transform:none;transition-delay:80ms}
+  body.ready .hero .cta{opacity:1;transform:none;transition-delay:160ms}
+  body.ready .hero .proof{opacity:1;transform:none;transition-delay:240ms}
+  body.ready .hero .mock{opacity:1;transform:none;transition-delay:320ms}
+
+  .states{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:32px}
+  .state-tab{background:transparent;border:1px solid var(--line);border-radius:12px;color:var(--fg2);
+             font-size:14px;line-height:20px;font-weight:600;padding:8px 12px;
+             transition:background 300ms var(--ease),color 300ms var(--ease),transform 300ms var(--ease)}
+  .state-tab:hover{color:#fff;background:var(--s3)}
+  .state-tab:active{transform:scale(.98)}
+  .state-tab[aria-selected="true"]{background:#fff;color:#111;border-color:#fff}
+  .state-panel{display:none;margin-top:16px;background:var(--s1);border:1px solid var(--line);
+               border-radius:16px;padding:24px;min-height:232px}
+  .state-panel.on{display:block;animation:fadeUp 500ms var(--ease)}
+  .skel{display:grid;gap:16px}
+  .skel-line{height:12px;border-radius:8px;background:var(--s3);animation:pulse 1200ms var(--ease) infinite}
+  .skel-line.w40{width:40%}.skel-line.w85{width:85%}.skel-line.w65{width:65%}
+  .skel-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+  .skel-card{height:72px;border-radius:8px;background:var(--s3);animation:pulse 1200ms var(--ease) infinite}
+  .empty,.state-copy{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+  .empty i,.state-copy i{font-size:24px;color:#fff}
+  .empty h3,.state-copy h3{font-size:18px;line-height:28px;font-weight:500}
+  .empty p,.state-copy p{font-size:14px;line-height:20px;color:var(--fg2);max-width:420px}
+  .err-box{display:flex;flex-direction:column;align-items:flex-start;gap:8px;border:1px solid #5C2626;
+           background:#1F1212;border-radius:12px;padding:16px}
+  .err-box i{font-size:24px;color:#FCA5A5}
+  .err-box h3{font-size:16px;line-height:24px;font-weight:600;color:#FCA5A5}
+  .err-box p{font-size:14px;line-height:20px;color:#E5B4B4}
+  .state-panel .btn{margin-top:8px}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+
+  .faq details[open] p{animation:fadeUp 500ms var(--ease)}
+
+  [data-reveal]{opacity:0;transform:translateY(32px);transition:opacity 700ms var(--ease),transform 700ms var(--ease)}
+
+  @media (max-width:820px){
+    .nav .links{display:none}
+    .nav .btn{display:none}
+    .menu-btn{display:flex}
+    .hero{padding:136px 0 64px}
+    .hero h1{font-size:48px;line-height:48px}
+    .sec-title{font-size:30px;line-height:36px}
+    .cards,.steps{grid-template-columns:1fr}
+    .tagline p{font-size:36px;line-height:40px}
+    .final h2{font-size:36px;line-height:40px}
+  }
+  @media (max-width:420px){
+    .hero h1{font-size:36px;line-height:40px}
+    .form input{min-width:100%}
+    .form .btn{width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+    [data-reveal]{opacity:1;transform:none}
+    .tagline .w{color:var(--fg)}
+  }
+</style>
+<noscript><style>.hero h1,.hero .sub,.hero .cta,.hero .proof,.hero .mock{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<nav class="nav" aria-label="Main">
+  <a class="brand" href="index.html" aria-label="LaunchPad home">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#fff"/><path d="M9 22V10h3v9h6v3H9z" fill="#131209"/></svg>
+    LaunchPad
+  </a>
+  <div class="links">
+    <a href="features.html">Features</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a class="btn" href="#signup">Start free trial</a>
+  <button class="menu-btn" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="features.html">Features</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="#faq">FAQ</a>
+  <a href="#signup">Start free trial</a>
+</div>
+
+<main id="main">
+  <header class="hero">
+    <div class="wrap">
+      <h1>Turn one idea into a landing page that converts</h1>
+      <p class="sub">Answer a few questions. LaunchPad drafts the structure, the copy, and the visual system, then hands you a page ready to publish.</p>
+      <div class="cta"><a class="btn" href="#signup">Start free trial</a></div>
+      <p class="proof">Join {{customerCount}} teams building pages with LaunchPad</p>
+
+      <div class="mock" aria-hidden="true">
+        <div class="mock-inner">
+          <div class="mock-bar"><i></i><i></i><i></i></div>
+          <div class="mock-body">
+            <div class="mock-line w45"></div>
+            <div class="mock-line w90"></div>
+            <div class="mock-line w70"></div>
+            <div class="mock-grid"><div class="mock-card"></div><div class="mock-card"></div><div class="mock-card"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="benefits">
+    <div class="wrap">
+      <p class="kicker">What you get</p>
+      <h2 class="sec-title">A page built around one action</h2>
+      <p class="sec-sub">Every section earns its place. No filler blocks, no competing buttons, no guesswork about what goes where.</p>
+
+      <div class="logos" aria-label="Teams using LaunchPad">
+        <span>Northwind</span><span>Cobalt Labs</span><span>Fieldnote</span><span>Arbor &amp; Co</span><span>Kite</span>
+      </div>
+
+      <div class="cards">
+        <div class="card"><i class="ph ph-layout" aria-hidden="true"></i><h3>Structure that converts</h3><p>Hero, benefits, proof, FAQ, and final call to action, in the order visitors expect.</p></div>
+        <div class="card"><i class="ph ph-pencil-simple" aria-hidden="true"></i><h3>Copy in your voice</h3><p>Real sentences drafted for your audience, never placeholder Latin.</p></div>
+        <div class="card"><i class="ph ph-swatches" aria-hidden="true"></i><h3>A visual system you can keep</h3><p>Type, spacing, radius, and motion tokens applied the same way on every page.</p></div>
+        <div class="card"><i class="ph ph-magnifying-glass" aria-hidden="true"></i><h3>Search ready</h3><p>Title, meta description, FAQ answers, and schema generated alongside the page.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tagline" aria-label="Our promise">
+    <div class="wrap">
+      <p><span class="w">One</span> <span class="w">offer.</span> <span class="w">One</span> <span class="w">audience.</span><br><span class="w">One</span> <span class="w">action</span> <span class="w">worth</span> <span class="w">taking.</span></p>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <p class="kicker">How it works</p>
+      <h2 class="sec-title">Three steps from idea to published page</h2>
+      <div class="steps">
+        <div class="step"><h3>Answer the intake</h3><p>Tell us the one action you want, who it is for, and what proof you already have.</p></div>
+        <div class="step"><h3>Review the draft</h3><p>Get the outline, headline, benefits, FAQ, and SEO tags before any styling begins.</p></div>
+        <div class="step"><h3>Publish or export</h3><p>Ship the page or take the clean HTML and CSS into your own codebase.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="proof">
+    <div class="wrap">
+      <p class="kicker">Proof</p>
+      <h2 class="sec-title">Teams stop rebuilding from a blank file</h2>
+      <blockquote class="quote">
+        <p>{{testimonial}}</p>
+        <footer>{{customerName}}, {{customerRole}} at {{customerCompany}}</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <section id="states">
+    <div class="wrap">
+      <p class="kicker">Every state, designed</p>
+      <h2 class="sec-title">Nothing ships with a blank screen</h2>
+      <p class="sec-sub">Loading, empty, error, and success all look like part of the product.</p>
+
+      <div class="states" role="tablist" aria-label="Interface states">
+        <button class="state-tab" role="tab" id="tab-loading" aria-selected="true" aria-controls="panel-loading">Loading</button>
+        <button class="state-tab" role="tab" id="tab-empty" aria-selected="false" aria-controls="panel-empty" tabindex="-1">Empty</button>
+        <button class="state-tab" role="tab" id="tab-error" aria-selected="false" aria-controls="panel-error" tabindex="-1">Error</button>
+        <button class="state-tab" role="tab" id="tab-success" aria-selected="false" aria-controls="panel-success" tabindex="-1">Success</button>
+      </div>
+
+      <div class="state-panel on" id="panel-loading" role="tabpanel" aria-labelledby="tab-loading">
+        <div class="skel" aria-label="Loading a page">
+          <div class="skel-line w40"></div>
+          <div class="skel-line w85"></div>
+          <div class="skel-line w65"></div>
+          <div class="skel-cards"><div class="skel-card"></div><div class="skel-card"></div><div class="skel-card"></div></div>
+        </div>
+      </div>
+
+      <div class="state-panel" id="panel-empty" role="tabpanel" aria-labelledby="tab-empty">
+        <div class="empty">
+          <i class="ph ph-file-plus" aria-hidden="true"></i>
+          <h3>No pages yet</h3>
+          <p>Your workspace is empty. Start with the intake and we will draft the first page for you.</p>
+          <a class="btn" href="#signup">Create your first page</a>
+        </div>
+      </div>
+
+      <div class="state-panel" id="panel-error" role="tabpanel" aria-labelledby="tab-error">
+        <div class="err-box">
+          <i class="ph ph-warning-circle" aria-hidden="true"></i>
+          <h3>Upload failed. The file is over 20 MB.</h3>
+          <p>Compress the image or choose a smaller file, then try again.</p>
+          <button class="btn" id="retryBtn" type="button">Choose another file</button>
+        </div>
+      </div>
+
+      <div class="state-panel" id="panel-success" role="tabpanel" aria-labelledby="tab-success">
+        <div class="state-copy">
+          <i class="ph ph-check-circle" aria-hidden="true"></i>
+          <h3>Page published</h3>
+          <p>Your page is live at launchpad.site/{{slug}}. Share the link or connect a custom domain.</p>
+          <a class="btn" href="#signup">View the page</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <p class="kicker">FAQ</p>
+      <h2 class="sec-title">Questions before you start</h2>
+      <div class="faq">
+        <details><summary>What do I get on the free plan?<i class="ph ph-plus" aria-hidden="true"></i></summary><p>{{freePlanDetails}}</p></details>
+        <details><summary>How much does it cost after the trial?<i class="ph ph-plus" aria-hidden="true"></i></summary><p>Paid plans start at {{price}} per month. Cancel anytime.</p></details>
+        <details><summary>Do I need a designer?<i class="ph ph-plus" aria-hidden="true"></i></summary><p>No. The visual system is applied for you, and every value comes from a fixed scale you can adjust later.</p></details>
+        <details><summary>Can I use my own brand?<i class="ph ph-plus" aria-hidden="true"></i></summary><p>Yes. Replace the type, color, and spacing tokens and the whole page follows.</p></details>
+        <details><summary>Does it work on phones?<i class="ph ph-plus" aria-hidden="true"></i></summary><p>Yes. Every layout is checked at 390px wide, with no horizontal overflow.</p></details>
+        <details><summary>Can I export the code?<i class="ph ph-plus" aria-hidden="true"></i></summary><p>Yes. You get clean HTML and CSS with no lock in.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" id="signup">
+    <div class="wrap">
+      <h2>Start your first page today</h2>
+      <p>Free trial, no credit card, cancel anytime.</p>
+      <form class="form" id="signupForm" novalidate>
+        <label for="email" class="sr-only" style="position:absolute;left:-9999px">Email address</label>
+        <input id="email" type="email" name="email" placeholder="you@company.com" autocomplete="email" required>
+        <button class="btn" type="submit">Start free trial</button>
+      </form>
+      <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap foot">
+    <p>© <span id="year">2026</span> LaunchPad. All rights reserved.</p>
+    <nav aria-label="Legal">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="#main">Back to top</a>
+    </nav>
+  </div>
+</footer>
+
+<div class="cookie hidden" id="cookie" role="dialog" aria-label="Cookie notice">
+  <span>We use cookies to understand how the page performs.</span>
+  <button class="btn" id="cookieOk" type="button">Accept</button>
+</div>
+
+<script>
+  const ease = 'cubic-bezier(0.22,1,0.36,1)';
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Mobile menu
+  const menuBtn = document.querySelector('.menu-btn');
+  const menu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => {
+    const open = menuBtn.getAttribute('aria-expanded') === 'true';
+    menuBtn.setAttribute('aria-expanded', String(!open));
+    menuBtn.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
+    menu.classList.toggle('open', !open);
+    document.body.style.overflow = open ? '' : 'hidden';
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menu.classList.remove('open');
+    document.body.style.overflow = '';
+  }));
+
+  // Scroll reveals
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.card, .step, .quote, .faq').forEach(el => {
+    el.setAttribute('data-reveal', '');
+    io.observe(el);
+  });
+
+  // Tagline word by word
+  const words = document.querySelectorAll('.tagline .w');
+  if (reduced) {
+    words.forEach(w => w.classList.add('on'));
+  } else {
+    const tagIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        words.forEach((w, i) => setTimeout(() => w.classList.add('on'), i * 60));
+        tagIO.disconnect();
+      });
+    }, { threshold: 0.4 });
+    tagIO.observe(document.querySelector('.tagline'));
+  }
+
+  // Form validation
+  const form = document.getElementById('signupForm');
+  const email = document.getElementById('email');
+  const msg = document.getElementById('formMsg');
+  const submitBtn = form.querySelector('button[type="submit"]');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (submitBtn.disabled) return;
+    const value = email.value.trim();
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+    msg.classList.toggle('err', !ok);
+    if (!ok) {
+      msg.textContent = value ? 'That email looks incomplete. Check the address and try again.' : 'Enter an email address to start the trial.';
+      email.focus();
+      return;
+    }
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Starting...';
+    setTimeout(() => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Start free trial';
+      msg.textContent = 'Thanks. Check ' + value + ' for your sign in link.';
+      form.reset();
+    }, 900);
+  });
+
+  // Cookie notice
+  const cookie = document.getElementById('cookie');
+  if (!localStorage.getItem('cookie-ok')) cookie.classList.remove('hidden');
+  document.getElementById('cookieOk').addEventListener('click', () => {
+    localStorage.setItem('cookie-ok', '1');
+    cookie.classList.add('hidden');
+  });
+
+  // State tabs
+  const tabs = Array.from(document.querySelectorAll('.state-tab'));
+  const selectTab = (i, focus) => {
+    tabs.forEach((t, j) => {
+      const on = i === j;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).classList.toggle('on', on);
+    });
+    if (focus) tabs[i].focus();
+  };
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => selectTab(i));
+    tab.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); selectTab((i + 1) % tabs.length, true); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); selectTab((i - 1 + tabs.length) % tabs.length, true); }
+    });
+  });
+
+  document.getElementById('retryBtn').addEventListener('click', () => selectTab(0, true));
+
+  // Hero entrance
+  requestAnimationFrame(() => document.body.classList.add('ready'));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
