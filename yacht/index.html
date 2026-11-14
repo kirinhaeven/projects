@@ -42,7 +42,101 @@
   .card:hover { transform:translateY(-6px); border-color:rgba(201,169,110,0.5); }
   .reveal { opacity:0; transform:translateY(32px); transition:opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
   .reveal.in { opacity:1; transform:translateY(0); }
+  .reveal-left { opacity:0; transform:translateX(-40px); transition:opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+  .reveal-left.in { opacity:1; transform:translateX(0); }
+  .reveal-right { opacity:0; transform:translateX(40px); transition:opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+  .reveal-right.in { opacity:1; transform:translateX(0); }
+  .reveal-scale { opacity:0; transform:scale(.92); transition:opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+  .reveal-scale.in { opacity:1; transform:scale(1); }
+
+  /* Image fade-in on load */
+  img { opacity:0; transition:opacity .6s ease; }
+  img.loaded { opacity:1; }
+
+  /* Scroll progress bar */
+  .scroll-progress { position:fixed; top:0; left:0; height:2px; background:linear-gradient(90deg,#C9A96E,#E6D3A8); z-index:100; width:0%; transition:width .1s linear; }
+
+  /* Back to top */
+  .back-to-top { position:fixed; bottom:2rem; right:2rem; width:44px; height:44px; border-radius:50%; background:rgba(201,169,110,0.15); border:1px solid rgba(201,169,110,0.3); color:#C9A96E; display:flex; align-items:center; justify-content:center; opacity:0; transform:translateY(20px); transition:opacity .3s, transform .3s; z-index:90; cursor:pointer; backdrop-filter:blur(8px); }
+  .back-to-top.visible { opacity:1; transform:translateY(0); }
+  .back-to-top:hover { background:rgba(201,169,110,0.25); transform:translateY(-2px); }
+
+  /* Card hover glow + 3D tilt */
+  .card { position:relative; overflow:hidden; transform-style:preserve-3d; perspective:1000px; transition:transform .4s cubic-bezier(.22,1,.36,1), border-color .3s; }
+  .card::before { content:''; position:absolute; inset:0; background:radial-gradient(600px circle at var(--mouse-x,50%) var(--mouse-y,50%), rgba(201,169,110,0.08), transparent 40%); opacity:0; transition:opacity .3s; pointer-events:none; z-index:1; }
+  .card:hover::before { opacity:1; }
+  .card:hover { border-color:rgba(201,169,110,0.5); }
+  .card > * { position:relative; z-index:2; }
+
+  /* 3D tilt card */
+  .tilt-card { transform-style:preserve-3d; perspective:1000px; }
+  .tilt-card-inner { transition:transform .15s ease-out; transform-style:preserve-3d; }
+  .tilt-card:hover .tilt-card-inner { transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)); }
+
+  /* Destination card hover zoom */
+  .dest-card { overflow:hidden; }
+  .dest-card img { transition:transform .6s cubic-bezier(.22,1,.36,1); }
+  .dest-card:hover img { transform:scale(1.12); }
+  .dest-card .dest-label { transition:transform .4s cubic-bezier(.22,1,.36,1); }
+  .dest-card:hover .dest-label { transform:translateY(-4px); }
+
+  /* Interactive cursor glow */
+  .cursor-glow { position:fixed; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle, rgba(201,169,110,0.08), transparent 70%); pointer-events:none; z-index:99; transform:translate(-50%,-50%); mix-blend-mode:screen; transition:opacity .3s; opacity:0; }
+  .cursor-glow.active { opacity:1; }
+
+  /* Parallax section */
+  .parallax-bg { will-change:transform; }
+
+  /* Testimonial carousel dots */
+  .testimonial-dots { display:flex; gap:8px; justify-content:center; margin-top:2rem; }
+  .testimonial-dot { width:8px; height:8px; border-radius:50%; background:rgba(201,169,110,0.3); cursor:pointer; transition:all .3s; border:none; padding:0; }
+  .testimonial-dot.active { background:#C9A96E; width:24px; border-radius:4px; }
+
+  /* Interactive form focus */
+  .form-input { transition:border-color .3s, box-shadow .3s, transform .2s; }
+  .form-input:focus { border-color:#C9A96E; box-shadow:0 0 0 3px rgba(201,169,110,0.15); transform:scale(1.01); }
+
+  /* Floating particles */
+  .particle { position:absolute; pointer-events:none; border-radius:50%; background:rgba(201,169,110,0.4); animation:floatParticle 6s ease-in-out infinite; }
+  @keyframes floatParticle {
+    0%,100% { transform:translateY(0) translateX(0); opacity:0.4; }
+    25% { transform:translateY(-20px) translateX(10px); opacity:0.8; }
+    50% { transform:translateY(-35px) translateX(-5px); opacity:0.6; }
+    75% { transform:translateY(-15px) translateX(15px); opacity:0.9; }
+  }
+
+  /* Interactive wave */
+  .interactive-wave { position:absolute; bottom:0; left:0; width:100%; overflow:hidden; line-height:0; pointer-events:none; }
+  .interactive-wave svg { display:block; width:calc(100% + 1.3px); height:80px; }
+
+  /* Magnetic button */
+  .magnetic { transition:transform .2s ease-out; }
+
+  /* Section divider */
+  .section-divider { height:1px; background:linear-gradient(90deg,transparent,rgba(201,169,110,0.3),transparent); margin:0 auto; max-width:200px; }
+
+  /* Smooth scroll */
+  html { scroll-behavior:smooth; }
+
+  /* Stagger animation for grid items */
+  .stagger > * { opacity:0; transform:translateY(24px); transition:opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
+  .stagger.in > * { opacity:1; transform:translateY(0); }
+  .stagger.in > *:nth-child(1) { transition-delay:.05s; }
+  .stagger.in > *:nth-child(2) { transition-delay:.12s; }
+  .stagger.in > *:nth-child(3) { transition-delay:.19s; }
+  .stagger.in > *:nth-child(4) { transition-delay:.26s; }
+  .stagger.in > *:nth-child(5) { transition-delay:.33s; }
   .wave { position:absolute; bottom:0; left:0; width:100%; overflow:hidden; line-height:0; }
+
+  /* Hero media - vinyl style */
+  .hero-media{position:absolute;inset:0;z-index:0;transform:scale(1.08);filter:blur(14px);opacity:0;animation:mediaIn 1.9s cubic-bezier(.22,1,.36,1) .1s forwards}
+  .hero-media img{position:absolute;inset:0;width:110%;height:110%;object-fit:cover;object-position:center 62%;display:block;z-index:1;transition:transform .15s ease-out;will-change:transform;animation:kenBurns 25s ease-in-out infinite alternate}
+  .hero-media:hover img{animation-play-state:paused}
+  .hero-overlay{position:absolute;inset:0;z-index:3;pointer-events:none;
+    background:linear-gradient(to bottom,rgba(11,31,51,.95) 0%,rgba(11,31,51,.88) 20%,rgba(11,31,51,.65) 36%,rgba(11,31,51,.25) 50%,rgba(11,31,51,0) 64%),
+    radial-gradient(120% 70% at 50% 0%,rgba(255,255,255,.08),rgba(255,255,255,0) 62%)}
+  @keyframes mediaIn{to{transform:scale(1);filter:blur(0);opacity:1}}
+  @keyframes kenBurns{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.15) translate(-2%,-1%)}}
   .nav-link { transition:color .2s; }
   .nav-link:hover { color:#C9A96E; }
   .focus-ring:focus-visible { outline:2px solid #C9A96E; outline-offset:2px; }
@@ -50,6 +144,14 @@
 </style>
 </head>
 <body>
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <!-- Back to top button -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+  <!-- Cursor glow -->
+  <div class="cursor-glow" id="cursorGlow"></div>
 
   <!-- Nav -->
   <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-navy/70 border-b border-gold/10">
@@ -74,26 +176,47 @@
     <!-- background -->
     <div class="absolute inset-0">
       <div class="absolute inset-0 bg-gradient-to-b from-navy-soft via-navy to-navy"></div>
-      <svg class="absolute inset-0 w-full h-full opacity-20" preserveAspectRatio="none" viewBox="0 0 1440 900" aria-hidden="true">
-        <defs>
-          <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a3a5c"/><stop offset="1" stop-color="#0B1F33"/></linearGradient>
-        </defs>
-        <rect width="1440" height="900" fill="url(#sea)"/>
-        <path d="M0 520 Q360 490 720 520 T1440 520 L1440 900 L0 900 Z" fill="#0B1F33" opacity=".6"/>
-        <path d="M0 560 Q360 530 720 560 T1440 560 L1440 900 L0 900 Z" fill="#0B1F33" opacity=".4"/>
-      </svg>
-      <!-- 3D motion yacht -->
-      <div class="absolute bottom-8 right-[4%] w-[62%] max-w-[980px] h-[52vh] pointer-events-auto" aria-hidden="true">
-        <model-viewer src="https://cdn.3dassets.dev/assets/38307/v1/model.glb"
-          alt="Luxury motor yacht"
-          auto-rotate auto-rotate-delay="0" rotation-per-second="20deg"
-          camera-controls disable-zoom
-          shadow-intensity="1.2" environment-image="neutral"
-          exposure="1.05"
-          style="width:100%;height:100%;background:transparent;">
-        </model-viewer>
+
+      <!-- Video media (vinyl-style) -->
+      <div class="hero-media absolute inset-0 z-0" aria-hidden="true">
+        <!-- Poster image -->
+        <img src="https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=1920&q=80&auto=format&fit=crop"
+             alt="Luxury yacht sailing in Mediterranean waters"
+             class="hero-poster" />
+        <!-- 4K Yacht image with Ken Burns motion - Luxury yacht at sea -->
+        <img src="https://images.unsplash.com/photo-1582967788606-a171c1080cb0?w=3840&q=90&auto=format&fit=crop"
+             alt="A luxury yacht at sea beneath a red sunset"
+             class="hero-yacht-img" />
+        <!-- Gradient overlay for text readability -->
+        <div class="hero-overlay"></div>
       </div>
-      <div class="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-navy/40"></div>
+
+      <!-- Watercolor brush accent on right (character side) -->
+      <div class="absolute right-0 top-1/2 -translate-y-1/2 w-[45%] max-w-[600px] h-[80%] pointer-events-none" aria-hidden="true">
+        <svg class="w-full h-full" viewBox="0 0 400 700" preserveAspectRatio="xMaxYMid meet">
+          <defs>
+            <filter id="brush" x="-30%" y="-30%" width="160%" height="160%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" seed="7" result="noise"/>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G"/>
+              <feGaussianBlur stdDeviation="3"/>
+            </filter>
+            <linearGradient id="goldFade" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#C9A96E" stop-opacity="0.35"/>
+              <stop offset="50%" stop-color="#E6D3A8" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#F5F1E8" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- Main brush stroke -->
+          <path d="M50 50 Q150 100 200 200 T280 400 T320 600" stroke="url(#goldFade)" stroke-width="80" fill="none" filter="url(#brush)" stroke-linecap="round" opacity="0.6"/>
+          <path d="M80 120 Q180 180 250 300 T300 550" stroke="url(#goldFade)" stroke-width="50" fill="none" filter="url(#brush)" stroke-linecap="round" opacity="0.4"/>
+          <path d="M30 200 Q100 250 180 350 T260 580" stroke="#C9A96E" stroke-width="20" fill="none" filter="url(#brush)" stroke-linecap="round" opacity="0.3"/>
+          <!-- Splatter dots -->
+          <g filter="url(#brush)" fill="#C9A96E" opacity="0.25">
+            <circle cx="350" cy="180" r="12"/><circle cx="380" cy="320" r="8"/><circle cx="360" cy="450" r="10"/>
+            <circle cx="390" cy="580" r="6"/><circle cx="340" cy="280" r="7"/><circle cx="370" cy="520" r="9"/>
+          </g>
+        </svg>
+      </div>
     </div>
 
     <div class="relative max-w-[1280px] mx-auto px-6 pt-32 pb-20 w-full">
@@ -110,9 +233,9 @@
           <a href="#fleet" class="btn-outline px-8 py-4 rounded-full text-sm font-semibold tracking-wide">Explore the Fleet</a>
         </div>
         <div class="mt-16 flex items-center gap-8 text-sm text-cream/60 reveal" style="transition-delay:.4s">
-          <div><span class="serif text-2xl text-gold">12+</span><br>Years at sea</div>
+          <div><span class="serif text-2xl text-gold stat-number" data-target="12" data-suffix="+">0+</span><br>Years at sea</div>
           <div class="w-px h-10 bg-gold/30"></div>
-          <div><span class="serif text-2xl text-gold">48</span><br>Destinations</div>
+          <div><span class="serif text-2xl text-gold stat-number" data-target="48" data-suffix="">0</span><br>Destinations</div>
           <div class="w-px h-10 bg-gold/30"></div>
           <div><span class="serif text-2xl text-gold">100%</span><br>Private charters</div>
         </div>
@@ -138,14 +261,8 @@
         </ul>
       </div>
       <div class="reveal relative">
-        <div class="aspect-[4/5] rounded-2xl overflow-hidden border border-gold/20 bg-gradient-to-br from-navy-soft to-navy flex items-center justify-center">
-          <svg viewBox="0 0 400 500" class="w-3/4 opacity-80" aria-hidden="true">
-            <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9A96E" stop-opacity=".4"/><stop offset="1" stop-color="#0B1F33"/></linearGradient></defs>
-            <rect width="400" height="500" fill="url(#g1)"/>
-            <path d="M40 380 Q200 360 360 380 L340 420 Q200 440 60 420 Z" fill="#F5F1E8" opacity=".6"/>
-            <path d="M120 380 L160 260 L200 380 Z" fill="#F5F1E8" opacity=".5"/>
-            <path d="M180 380 L220 290 L260 380 Z" fill="#F5F1E8" opacity=".4"/>
-          </svg>
+        <div class="aspect-[4/5] rounded-2xl overflow-hidden border border-gold/20">
+          <img src="https://images.unsplash.com/photo-1628029338883-61644ec68475?w=800&q=80&auto=format&fit=crop" alt="Luxury yacht experience" class="w-full h-full object-cover" />
         </div>
         <div class="absolute -bottom-6 -left-6 bg-gold text-navy px-6 py-4 rounded-xl shadow-lg">
           <p class="serif text-2xl">Est. 2012</p>
@@ -163,10 +280,12 @@
         <h2 class="serif text-4xl md:text-5xl text-cream">Vessels of distinction.</h2>
         <p class="mt-4 text-cream/60">Three yachts, each with its own character, all held to one standard.</p>
       </div>
-      <div class="grid md:grid-cols-3 gap-8">
+      <div class="grid md:grid-cols-3 gap-8 stagger">
         <!-- Yacht 1 -->
-        <article class="card rounded-2xl p-8 reveal">
-          <svg viewBox="0 0 200 80" class="w-full mb-6" aria-hidden="true"><path d="M10 60 Q100 50 190 60 L180 72 Q100 80 20 72 Z" fill="#C9A96E" opacity=".8"/><path d="M70 60 L95 20 L120 60 Z" fill="#F5F1E8" opacity=".7"/></svg>
+        <article class="card rounded-2xl p-8 reveal tilt-card">
+          <div class="w-full mb-6 rounded-xl overflow-hidden aspect-[3/2]">
+            <img src="https://images.unsplash.com/photo-1621275471769-e6aa344546d5?w=800&q=80&auto=format&fit=crop" alt="Aurelia I - 42m luxury yacht" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+          </div>
           <h3 class="serif text-2xl text-cream">Aurelia I</h3>
           <p class="text-gold text-sm tracking-widest uppercase mt-1">42m · 8 Guests</p>
           <p class="mt-4 text-cream/60 text-sm leading-relaxed">Our flagship. A floating residence with five suites, a cinema, and a deck made for long evenings at anchor.</p>
@@ -176,8 +295,10 @@
           </div>
         </article>
         <!-- Yacht 2 -->
-        <article class="card rounded-2xl p-8 reveal" style="transition-delay:.1s">
-          <svg viewBox="0 0 200 80" class="w-full mb-6" aria-hidden="true"><path d="M10 60 Q100 50 190 60 L180 72 Q100 80 20 72 Z" fill="#C9A96E" opacity=".8"/><path d="M85 60 L105 30 L125 60 Z" fill="#F5F1E8" opacity=".7"/><path d="M130 60 L145 38 L160 60 Z" fill="#F5F1E8" opacity=".5"/></svg>
+        <article class="card rounded-2xl p-8 reveal tilt-card" style="transition-delay:.1s">
+          <div class="w-full mb-6 rounded-xl overflow-hidden aspect-[3/2]">
+            <img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=800&q=80&auto=format&fit=crop" alt="Aurelia II - 36m luxury yacht" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+          </div>
           <h3 class="serif text-2xl text-cream">Aurelia II</h3>
           <p class="text-gold text-sm tracking-widest uppercase mt-1">36m · 6 Guests</p>
           <p class="mt-4 text-cream/60 text-sm leading-relaxed">Agile and intimate. Built for island-hopping and hidden coves, with a chef who follows your cravings.</p>
@@ -187,8 +308,10 @@
           </div>
         </article>
         <!-- Yacht 3 -->
-        <article class="card rounded-2xl p-8 reveal" style="transition-delay:.2s">
-          <svg viewBox="0 0 200 80" class="w-full mb-6" aria-hidden="true"><path d="M10 60 Q100 50 190 60 L180 72 Q100 80 20 72 Z" fill="#C9A96E" opacity=".8"/><rect x="80" y="30" width="60" height="30" rx="4" fill="#F5F1E8" opacity=".7"/></svg>
+        <article class="card rounded-2xl p-8 reveal tilt-card" style="transition-delay:.2s">
+          <div class="w-full mb-6 rounded-xl overflow-hidden aspect-[3/2]">
+            <img src="https://images.unsplash.com/photo-1575893240675-17e719ffa7c5?w=800&q=80&auto=format&fit=crop" alt="Aurelia III - 28m sailing yacht" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+          </div>
           <h3 class="serif text-2xl text-cream">Aurelia III</h3>
           <p class="text-gold text-sm tracking-widest uppercase mt-1">28m · 4 Guests</p>
           <p class="mt-4 text-cream/60 text-sm leading-relaxed">A classic sailer for two couples. Wind, silence, and the kind of nights you remember for decades.</p>
@@ -211,22 +334,26 @@
         </div>
         <p class="text-cream/60 max-w-md mt-4 md:mt-0">From the Amalfi Coast to the Greek isles, the Balearics to the Caribbean. We know the quiet anchorages.</p>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="reveal relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/15 bg-gradient-to-br from-navy-soft to-navy flex items-end p-5">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 stagger">
+        <div class="reveal relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/15 dest-card">
+          <img src="https://images.unsplash.com/photo-1514179974491-a7885781ed87?w=600&q=80&auto=format&fit=crop" alt="Amalfi Coast" class="absolute inset-0 w-full h-full object-cover" />
           <div class="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent"></div>
-          <div class="relative"><p class="serif text-xl text-cream">Amalfi Coast</p><p class="text-xs text-gold tracking-widest uppercase mt-1">Italy</p></div>
+          <div class="relative z-10 flex items-end p-5 h-full"><div><p class="serif text-xl text-cream">Amalfi Coast</p><p class="text-xs text-gold tracking-widest uppercase mt-1">Italy</p></div></div>
         </div>
-        <div class="reveal relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/15 bg-gradient-to-br from-navy-soft to-navy flex items-end p-5" style="transition-delay:.1s">
+        <div class="reveal relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/15 dest-card" style="transition-delay:.1s">
+          <img src="https://images.unsplash.com/photo-1613977257365-aaae5a9817ff?w=600&q=80&auto=format&fit=crop" alt="Cyclades" class="absolute inset-0 w-full h-full object-cover" />
           <div class="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent"></div>
-          <div class="relative"><p class="serif text-xl text-cream">Cyclades</p><p class="text-xs text-gold tracking-widest uppercase mt-1">Greece</p></div>
+          <div class="relative z-10 flex items-end p-5 h-full"><div><p class="serif text-xl text-cream">Cyclades</p><p class="text-xs text-gold tracking-widest uppercase mt-1">Greece</p></div></div>
         </div>
-        <div class="reveal relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/15 bg-gradient-to-br from-navy-soft to-navy flex items-end p-5" style="transition-delay:.2s">
+        <div class="reveal relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/15 dest-card" style="transition-delay:.2s">
+          <img src="https://images.unsplash.com/photo-1506527240747-720a3e17b910?w=600&q=80&auto=format&fit=crop" alt="Balearics" class="absolute inset-0 w-full h-full object-cover" />
           <div class="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent"></div>
-          <div class="relative"><p class="serif text-xl text-cream">Balearics</p><p class="text-xs text-gold tracking-widest uppercase mt-1">Spain</p></div>
+          <div class="relative z-10 flex items-end p-5 h-full"><div><p class="serif text-xl text-cream">Balearics</p><p class="text-xs text-gold tracking-widest uppercase mt-1">Spain</p></div></div>
         </div>
-        <div class="reveal relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/15 bg-gradient-to-br from-navy-soft to-navy flex items-end p-5" style="transition-delay:.3s">
+        <div class="reveal relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/15 dest-card" style="transition-delay:.3s">
+          <img src="https://images.unsplash.com/photo-1528154291023-a6525fabe5b4?w=600&q=80&auto=format&fit=crop" alt="Caribbean" class="absolute inset-0 w-full h-full object-cover" />
           <div class="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent"></div>
-          <div class="relative"><p class="serif text-xl text-cream">Caribbean</p><p class="text-xs text-gold tracking-widest uppercase mt-1">Leeward Isles</p></div>
+          <div class="relative z-10 flex items-end p-5 h-full"><div><p class="serif text-xl text-cream">Caribbean</p><p class="text-xs text-gold tracking-widest uppercase mt-1">Leeward Isles</p></div></div>
         </div>
       </div>
     </div>
@@ -239,7 +366,7 @@
         <p class="text-gold tracking-[0.4em] text-xs uppercase mb-4">Stories</p>
         <h2 class="serif text-4xl md:text-5xl text-cream">Words from our guests.</h2>
       </div>
-      <div class="grid md:grid-cols-3 gap-8">
+      <div class="grid md:grid-cols-3 gap-8 stagger">
         <blockquote class="card rounded-2xl p-8 reveal">
           <p class="serif text-lg text-cream/90 leading-relaxed">"The most peaceful week of our lives. The crew anticipated everything before we knew we wanted it."</p>
           <footer class="mt-6 text-sm text-cream/60">— Elena & Marco, Milan</footer>
@@ -263,9 +390,9 @@
       <h2 class="serif text-4xl md:text-6xl text-cream leading-tight">Your voyage begins with a conversation.</h2>
       <p class="mt-6 text-cream/60 max-w-xl mx-auto">Tell us your dates, your group, and the feeling you're after. We'll return a tailored proposal within 48 hours.</p>
       <form class="mt-10 grid md:grid-cols-3 gap-4 text-left" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Sent — we will be in touch';">
-        <input type="text" placeholder="Your name" required class="px-5 py-4 rounded-full bg-white/5 border border-gold/20 text-cream placeholder-cream/40 focus:outline-none focus:border-gold">
-        <input type="email" placeholder="Email address" required class="px-5 py-4 rounded-full bg-white/5 border border-gold/20 text-cream placeholder-cream/40 focus:outline-none focus:border-gold">
-        <input type="text" placeholder="Preferred dates" class="px-5 py-4 rounded-full bg-white/5 border border-gold/20 text-cream placeholder-cream/40 focus:outline-none focus:border-gold">
+        <input type="text" placeholder="Your name" required class="form-input px-5 py-4 rounded-full bg-white/5 border border-gold/20 text-cream placeholder-cream/40 focus:outline-none focus:border-gold">
+        <input type="email" placeholder="Email address" required class="form-input px-5 py-4 rounded-full bg-white/5 border border-gold/20 text-cream placeholder-cream/40 focus:outline-none focus:border-gold">
+        <input type="text" placeholder="Preferred dates" class="form-input px-5 py-4 rounded-full bg-white/5 border border-gold/20 text-cream placeholder-cream/40 focus:outline-none focus:border-gold">
         <button type="submit" class="md:col-span-3 btn-gold py-4 rounded-full font-semibold tracking-wide">Send Inquiry</button>
       </form>
     </div>
@@ -287,13 +414,267 @@
     </div>
   </footer>
 
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   <script>
-    // reveal on scroll
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-  </script>
+  // Reveal on scroll (with stagger support)
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => io.observe(el));
+
+  // Stagger grids
+  const staggerIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); staggerIO.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.stagger').forEach(el => staggerIO.observe(el));
+
+  // Cursor parallax on hero image
+  const heroSection = document.getElementById('top');
+  const heroImg = document.querySelector('.hero-yacht-img');
+  if (heroSection && heroImg) {
+    let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
+    const strength = 30;
+
+    heroSection.addEventListener('mousemove', (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const mx = e.clientX - rect.left - cx;
+      const my = e.clientY - rect.top - cy;
+      targetX = (mx / cx) * strength;
+      targetY = (my / cy) * strength;
+    });
+
+    heroSection.addEventListener('mouseleave', () => {
+      targetX = 0;
+      targetY = 0;
+    });
+
+    function animateParallax() {
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+      heroImg.style.transform = `translate(${currentX}px, ${currentY}px) scale(1.05)`;
+      requestAnimationFrame(animateParallax);
+    }
+    animateParallax();
+  }
+
+  // Image fade-in on load
+  document.querySelectorAll('img').forEach(img => {
+    if (img.complete) { img.classList.add('loaded'); }
+    else { img.addEventListener('load', () => img.classList.add('loaded')); }
+  });
+
+  // Card mouse-tracking glow
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      card.style.setProperty('--mouse-x', x + '%');
+      card.style.setProperty('--mouse-y', y + '%');
+    });
+  });
+
+  // Scroll progress bar
+  const scrollProgress = document.getElementById('scrollProgress');
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    if (scrollProgress) scrollProgress.style.width = progress + '%';
+    if (backToTop) {
+      if (scrollTop > 400) backToTop.classList.add('visible');
+      else backToTop.classList.remove('visible');
+    }
+  }, { passive: true });
+
+  // Back to top click
+  if (backToTop) {
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      const target = document.querySelector(anchor.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Cursor glow tracking
+  const cursorGlow = document.getElementById('cursorGlow');
+  if (cursorGlow) {
+    let glowX = 0, glowY = 0;
+    let glowCurrentX = 0, glowCurrentY = 0;
+    document.addEventListener('mousemove', (e) => {
+      glowX = e.clientX;
+      glowY = e.clientY;
+      cursorGlow.classList.add('active');
+    });
+    document.addEventListener('mouseleave', () => {
+      cursorGlow.classList.remove('active');
+    });
+    function animateGlow() {
+      glowCurrentX += (glowX - glowCurrentX) * 0.1;
+      glowCurrentY += (glowY - glowCurrentY) * 0.1;
+      cursorGlow.style.left = glowCurrentX + 'px';
+      cursorGlow.style.top = glowCurrentY + 'px';
+      requestAnimationFrame(animateGlow);
+    }
+    animateGlow();
+  }
+
+  // 3D tilt effect on cards
+  document.querySelectorAll('.card, .tilt-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      const rotateX = (0.5 - y) * 12;
+      const rotateY = (x - 0.5) * 12;
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
+  // Magnetic buttons
+  document.querySelectorAll('.btn-gold, .btn-outline').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+
+  // Parallax scrolling on sections
+  const parallaxElements = document.querySelectorAll('.parallax-bg');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    parallaxElements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const speed = parseFloat(el.dataset.speed || '0.3');
+      const offset = (rect.top + scrollY) * speed;
+      el.style.transform = `translateY(${scrollY * speed * 0.3}px)`;
+    });
+  }, { passive: true });
+
+  // Interactive form validation
+  const form = document.querySelector('#inquiry form');
+  if (form) {
+    const inputs = form.querySelectorAll('input');
+    inputs.forEach(input => {
+      input.addEventListener('input', () => {
+        if (input.checkValidity()) {
+          input.style.borderColor = 'rgba(201,169,110,0.5)';
+        } else {
+          input.style.borderColor = 'rgba(239,68,68,0.5)';
+        }
+      });
+      input.addEventListener('focus', () => {
+        input.parentElement?.classList.add('focused');
+      });
+      input.addEventListener('blur', () => {
+        input.parentElement?.classList.remove('focused');
+      });
+    });
+  }
+
+  // Interactive destination cards
+  document.querySelectorAll('.dest-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.style.transform = 'scale(1.02)';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
+  // Floating particles in hero
+  const heroEl = document.getElementById('top');
+  if (heroEl) {
+    for (let i = 0; i < 12; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particle.style.width = (Math.random() * 4 + 2) + 'px';
+      particle.style.height = particle.style.width;
+      particle.style.animationDelay = Math.random() * 6 + 's';
+      particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+      heroEl.appendChild(particle);
+    }
+  }
+
+  // Interactive testimonials - auto-rotate highlight
+  const testimonials = document.querySelectorAll('#testimonials blockquote');
+  let currentTestimonial = 0;
+  if (testimonials.length > 0) {
+    setInterval(() => {
+      testimonials.forEach((t, i) => {
+        t.style.opacity = i === currentTestimonial ? '1' : '0.5';
+        t.style.transform = i === currentTestimonial ? 'scale(1.02)' : 'scale(1)';
+      });
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+    }, 3000);
+  }
+
+  // Hover reveal for fleet cards - show extra info
+  document.querySelectorAll('#fleet article').forEach(card => {
+    const info = card.querySelector('.fleet-extra');
+    if (info) {
+      card.addEventListener('mouseenter', () => {
+        info.style.maxHeight = info.scrollHeight + 'px';
+        info.style.opacity = '1';
+      });
+      card.addEventListener('mouseleave', () => {
+        info.style.maxHeight = '0px';
+        info.style.opacity = '0';
+      });
+    }
+  });
+
+  // Number counter animation
+  function animateCounter(el, target, duration = 2000) {
+    const start = 0;
+    const startTime = performance.now();
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(start + (target - start) * eased);
+      el.textContent = current + (el.dataset.suffix || '');
+      if (progress < 1) requestAnimationFrame(update);
+      else el.textContent = target + (el.dataset.suffix || '');
+    }
+    requestAnimationFrame(update);
+  }
+
+  const counterIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        const target = parseInt(el.dataset.target);
+        if (!isNaN(target)) animateCounter(el, target);
+        counterIO.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  // Add data attributes to stat numbers
+  document.querySelectorAll('.stat-number').forEach(el => counterIO.observe(el));
+</script>
 </body>
 </html>
