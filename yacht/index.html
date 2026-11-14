@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Aurelia Yachts — Private Charter & Luxury Voyages</title>
+<meta name="description" content="Bespoke luxury yacht charters in the Mediterranean and beyond. Private crews, curated itineraries, and unforgettable voyages.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy: '#0B1F33',
+          'navy-soft': '#132944',
+          gold: '#C9A96E',
+          'gold-soft': '#E6D3A8',
+          cream: '#F5F1E8',
+          ink: '#1A1A1A',
+        },
+        fontFamily: { serif: ['"Playfair Display"', 'Georgia', 'serif'], sans: ['Manrope', 'system-ui', 'sans-serif'] },
+      }
+    }
+  }
+</script>
+<style>
+  :root { --navy:#0B1F33; --navy-soft:#132944; --gold:#C9A96E; --gold-soft:#E6D3A8; --cream:#F5F1E8; }
+  html { background:#0B1F33; }
+  body { font-family:'Manrope',system-ui,sans-serif; background:#0B1F33; color:#F5F1E8; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; text-decoration:none; }
+  img,svg { display:block; max-width:100%; }
+  .serif { font-family:'Playfair Display',Georgia,serif; }
+  .gold-line { height:1px; background:linear-gradient(90deg,transparent,#C9A96E,transparent); }
+  .btn-gold { background:#C9A96E; color:#0B1F33; transition:transform .3s cubic-bezier(.22,1,.36,1), background .3s; }
+  .btn-gold:hover { background:#E6D3A8; transform:translateY(-1px); }
+  .btn-outline { border:1px solid #C9A96E; color:#C9A96E; transition:background .3s, color .3s, transform .3s; }
+  .btn-outline:hover { background:#C9A96E; color:#0B1F33; transform:translateY(-1px); }
+  .card { background:rgba(255,255,255,0.04); border:1px solid rgba(201,169,110,0.18); backdrop-filter:blur(6px); transition:transform .4s cubic-bezier(.22,1,.36,1), border-color .3s; }
+  .card:hover { transform:translateY(-6px); border-color:rgba(201,169,110,0.5); }
+  .reveal { opacity:0; transform:translateY(32px); transition:opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+  .reveal.in { opacity:1; transform:translateY(0); }
+  .wave { position:absolute; bottom:0; left:0; width:100%; overflow:hidden; line-height:0; }
+  .nav-link { transition:color .2s; }
+  .nav-link:hover { color:#C9A96E; }
+  .focus-ring:focus-visible { outline:2px solid #C9A96E; outline-offset:2px; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity:1; transform:none; } }
+</style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-navy/70 border-b border-gold/10">
+    <nav class="max-w-[1280px] mx-auto flex items-center justify-between px-6 py-4" aria-label="Primary">
+      <a href="#top" class="flex items-center gap-3 focus-ring" aria-label="Aurelia Yachts home">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true"><path d="M3 22 L15 6 L27 22 Z" stroke="#C9A96E" stroke-width="1.5" fill="none"/><path d="M8 22 L15 12 L22 22" stroke="#C9A96E" stroke-width="1" fill="none" opacity=".5"/></svg>
+        <span class="serif text-xl tracking-wide text-cream">Aurelia</span>
+        <span class="text-xs tracking-[0.3em] text-gold/70 uppercase ml-1">Yachts</span>
+      </a>
+      <ul class="hidden md:flex items-center gap-8 text-sm tracking-wide text-cream/80">
+        <li><a href="#fleet" class="nav-link focus-ring">Fleet</a></li>
+        <li><a href="#experience" class="nav-link focus-ring">Experience</a></li>
+        <li><a href="#destinations" class="nav-link focus-ring">Destinations</a></li>
+        <li><a href="#testimonials" class="nav-link focus-ring">Stories</a></li>
+      </ul>
+      <a href="#inquiry" class="btn-gold focus-ring px-5 py-2.5 rounded-full text-sm font-semibold tracking-wide">Reserve a Voyage</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section id="top" class="relative min-h-screen flex items-center overflow-hidden">
+    <!-- background -->
+    <div class="absolute inset-0">
+      <div class="absolute inset-0 bg-gradient-to-b from-navy-soft via-navy to-navy"></div>
+      <svg class="absolute inset-0 w-full h-full opacity-20" preserveAspectRatio="none" viewBox="0 0 1440 900" aria-hidden="true">
+        <defs>
+          <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a3a5c"/><stop offset="1" stop-color="#0B1F33"/></linearGradient>
+        </defs>
+        <rect width="1440" height="900" fill="url(#sea)"/>
+        <path d="M0 520 Q360 490 720 520 T1440 520 L1440 900 L0 900 Z" fill="#0B1F33" opacity=".6"/>
+        <path d="M0 560 Q360 530 720 560 T1440 560 L1440 900 L0 900 Z" fill="#0B1F33" opacity=".4"/>
+      </svg>
+      <!-- 3D motion yacht -->
+      <div class="absolute bottom-8 right-[4%] w-[62%] max-w-[980px] h-[52vh] pointer-events-auto" aria-hidden="true">
+        <model-viewer src="https://cdn.3dassets.dev/assets/38307/v1/model.glb"
+          alt="Luxury motor yacht"
+          auto-rotate auto-rotate-delay="0" rotation-per-second="20deg"
+          camera-controls disable-zoom
+          shadow-intensity="1.2" environment-image="neutral"
+          exposure="1.05"
+          style="width:100%;height:100%;background:transparent;">
+        </model-viewer>
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-navy/40"></div>
+    </div>
+
+    <div class="relative max-w-[1280px] mx-auto px-6 pt-32 pb-20 w-full">
+      <div class="max-w-3xl">
+        <p class="text-gold tracking-[0.4em] text-xs uppercase mb-6 reveal">Private Charter · Mediterranean & Beyond</p>
+        <h1 class="serif text-5xl md:text-7xl lg:text-8xl leading-[1.02] text-cream reveal" style="transition-delay:.1s">
+          Sail the world<br><span class="text-gold-soft">in absolute privacy.</span>
+        </h1>
+        <p class="mt-8 text-lg text-cream/70 max-w-xl leading-relaxed reveal" style="transition-delay:.2s">
+          Bespoke yacht charters with a dedicated crew, curated itineraries, and the quiet luxury of having the sea entirely to yourself.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-4 reveal" style="transition-delay:.3s">
+          <a href="#inquiry" class="btn-gold px-8 py-4 rounded-full text-sm font-semibold tracking-wide">Reserve Your Voyage</a>
+          <a href="#fleet" class="btn-outline px-8 py-4 rounded-full text-sm font-semibold tracking-wide">Explore the Fleet</a>
+        </div>
+        <div class="mt-16 flex items-center gap-8 text-sm text-cream/60 reveal" style="transition-delay:.4s">
+          <div><span class="serif text-2xl text-gold">12+</span><br>Years at sea</div>
+          <div class="w-px h-10 bg-gold/30"></div>
+          <div><span class="serif text-2xl text-gold">48</span><br>Destinations</div>
+          <div class="w-px h-10 bg-gold/30"></div>
+          <div><span class="serif text-2xl text-gold">100%</span><br>Private charters</div>
+        </div>
+      </div>
+    </div>
+    <div class="wave">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" class="w-full h-24"><path d="M0 60 Q360 0 720 60 T1440 60 L1440 120 L0 120 Z" fill="#0B1F33"/></svg>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience" class="py-24 md:py-32 bg-navy">
+    <div class="max-w-[1280px] mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+      <div class="reveal">
+        <p class="text-gold tracking-[0.4em] text-xs uppercase mb-4">The Experience</p>
+        <h2 class="serif text-4xl md:text-5xl leading-tight text-cream">A voyage shaped entirely around you.</h2>
+        <p class="mt-6 text-cream/70 leading-relaxed">From the moment you step aboard, every detail is considered. A dedicated crew, a chef who learns your preferences, and an itinerary drawn around the winds and your whims. No schedules but your own.</p>
+        <ul class="mt-8 space-y-4 text-cream/80">
+          <li class="flex gap-3"><span class="text-gold">✦</span> Dedicated captain and crew of six</li>
+          <li class="flex gap-3"><span class="text-gold">✦</span> Onboard chef with bespoke menus</li>
+          <li class="flex gap-3"><span class="text-gold">✦</span> Water toys, diving, and shore excursions</li>
+          <li class="flex gap-3"><span class="text-gold">✦</span> 24/7 concierge ashore</li>
+        </ul>
+      </div>
+      <div class="reveal relative">
+        <div class="aspect-[4/5] rounded-2xl overflow-hidden border border-gold/20 bg-gradient-to-br from-navy-soft to-navy flex items-center justify-center">
+          <svg viewBox="0 0 400 500" class="w-3/4 opacity-80" aria-hidden="true">
+            <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9A96E" stop-opacity=".4"/><stop offset="1" stop-color="#0B1F33"/></linearGradient></defs>
+            <rect width="400" height="500" fill="url(#g1)"/>
+            <path d="M40 380 Q200 360 360 380 L340 420 Q200 440 60 420 Z" fill="#F5F1E8" opacity=".6"/>
+            <path d="M120 380 L160 260 L200 380 Z" fill="#F5F1E8" opacity=".5"/>
+            <path d="M180 380 L220 290 L260 380 Z" fill="#F5F1E8" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="absolute -bottom-6 -left-6 bg-gold text-navy px-6 py-4 rounded-xl shadow-lg">
+          <p class="serif text-2xl">Est. 2012</p>
+          <p class="text-xs tracking-widest uppercase opacity-70">Mediterranean</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fleet -->
+  <section id="fleet" class="py-24 md:py-32 bg-navy-soft">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+        <p class="text-gold tracking-[0.4em] text-xs uppercase mb-4">The Fleet</p>
+        <h2 class="serif text-4xl md:text-5xl text-cream">Vessels of distinction.</h2>
+        <p class="mt-4 text-cream/60">Three yachts, each with its own character, all held to one standard.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Yacht 1 -->
+        <article class="card rounded-2xl p-8 reveal">
+          <svg viewBox="0 0 200 80" class="w-full mb-6" aria-hidden="true"><path d="M10 60 Q100 50 190 60 L180 72 Q100 80 20 72 Z" fill="#C9A96E" opacity=".8"/><path d="M70 60 L95 20 L120 60 Z" fill="#F5F1E8" opacity=".7"/></svg>
+          <h3 class="serif text-2xl text-cream">Aurelia I</h3>
+          <p class="text-gold text-sm tracking-widest uppercase mt-1">42m · 8 Guests</p>
+          <p class="mt-4 text-cream/60 text-sm leading-relaxed">Our flagship. A floating residence with five suites, a cinema, and a deck made for long evenings at anchor.</p>
+          <div class="mt-6 flex items-center justify-between text-xs text-cream/50">
+            <span>From €48,000 / week</span>
+            <a href="#inquiry" class="text-gold hover:underline">Inquire →</a>
+          </div>
+        </article>
+        <!-- Yacht 2 -->
+        <article class="card rounded-2xl p-8 reveal" style="transition-delay:.1s">
+          <svg viewBox="0 0 200 80" class="w-full mb-6" aria-hidden="true"><path d="M10 60 Q100 50 190 60 L180 72 Q100 80 20 72 Z" fill="#C9A96E" opacity=".8"/><path d="M85 60 L105 30 L125 60 Z" fill="#F5F1E8" opacity=".7"/><path d="M130 60 L145 38 L160 60 Z" fill="#F5F1E8" opacity=".5"/></svg>
+          <h3 class="serif text-2xl text-cream">Aurelia II</h3>
+          <p class="text-gold text-sm tracking-widest uppercase mt-1">36m · 6 Guests</p>
+          <p class="mt-4 text-cream/60 text-sm leading-relaxed">Agile and intimate. Built for island-hopping and hidden coves, with a chef who follows your cravings.</p>
+          <div class="mt-6 flex items-center justify-between text-xs text-cream/50">
+            <span>From €32,000 / week</span>
+            <a href="#inquiry" class="text-gold hover:underline">Inquire →</a>
+          </div>
+        </article>
+        <!-- Yacht 3 -->
+        <article class="card rounded-2xl p-8 reveal" style="transition-delay:.2s">
+          <svg viewBox="0 0 200 80" class="w-full mb-6" aria-hidden="true"><path d="M10 60 Q100 50 190 60 L180 72 Q100 80 20 72 Z" fill="#C9A96E" opacity=".8"/><rect x="80" y="30" width="60" height="30" rx="4" fill="#F5F1E8" opacity=".7"/></svg>
+          <h3 class="serif text-2xl text-cream">Aurelia III</h3>
+          <p class="text-gold text-sm tracking-widest uppercase mt-1">28m · 4 Guests</p>
+          <p class="mt-4 text-cream/60 text-sm leading-relaxed">A classic sailer for two couples. Wind, silence, and the kind of nights you remember for decades.</p>
+          <div class="mt-6 flex items-center justify-between text-xs text-cream/50">
+            <span>From €18,000 / week</span>
+            <a href="#inquiry" class="text-gold hover:underline">Inquire →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Destinations -->
+  <section id="destinations" class="py-24 md:py-32 bg-navy">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12 reveal">
+        <div>
+          <p class="text-gold tracking-[0.4em] text-xs uppercase mb-4">Destinations</p>
+          <h2 class="serif text-4xl md:text-5xl text-cream">Where the wind takes you.</h2>
+        </div>
+        <p class="text-cream/60 max-w-md mt-4 md:mt-0">From the Amalfi Coast to the Greek isles, the Balearics to the Caribbean. We know the quiet anchorages.</p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="reveal relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/15 bg-gradient-to-br from-navy-soft to-navy flex items-end p-5">
+          <div class="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent"></div>
+          <div class="relative"><p class="serif text-xl text-cream">Amalfi Coast</p><p class="text-xs text-gold tracking-widest uppercase mt-1">Italy</p></div>
+        </div>
+        <div class="reveal relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/15 bg-gradient-to-br from-navy-soft to-navy flex items-end p-5" style="transition-delay:.1s">
+          <div class="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent"></div>
+          <div class="relative"><p class="serif text-xl text-cream">Cyclades</p><p class="text-xs text-gold tracking-widest uppercase mt-1">Greece</p></div>
+        </div>
+        <div class="reveal relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/15 bg-gradient-to-br from-navy-soft to-navy flex items-end p-5" style="transition-delay:.2s">
+          <div class="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent"></div>
+          <div class="relative"><p class="serif text-xl text-cream">Balearics</p><p class="text-xs text-gold tracking-widest uppercase mt-1">Spain</p></div>
+        </div>
+        <div class="reveal relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/15 bg-gradient-to-br from-navy-soft to-navy flex items-end p-5" style="transition-delay:.3s">
+          <div class="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent"></div>
+          <div class="relative"><p class="serif text-xl text-cream">Caribbean</p><p class="text-xs text-gold tracking-widest uppercase mt-1">Leeward Isles</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="py-24 md:py-32 bg-navy-soft">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="text-center mb-16 reveal">
+        <p class="text-gold tracking-[0.4em] text-xs uppercase mb-4">Stories</p>
+        <h2 class="serif text-4xl md:text-5xl text-cream">Words from our guests.</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <blockquote class="card rounded-2xl p-8 reveal">
+          <p class="serif text-lg text-cream/90 leading-relaxed">"The most peaceful week of our lives. The crew anticipated everything before we knew we wanted it."</p>
+          <footer class="mt-6 text-sm text-cream/60">— Elena & Marco, Milan</footer>
+        </blockquote>
+        <blockquote class="card rounded-2xl p-8 reveal" style="transition-delay:.1s">
+          <p class="serif text-lg text-cream/90 leading-relaxed">"We've chartered before, but nothing like this. It felt like our own private island that moved."</p>
+          <footer class="mt-6 text-sm text-cream/60">— James Whitfield, London</footer>
+        </blockquote>
+        <blockquote class="card rounded-2xl p-8 reveal" style="transition-delay:.2s">
+          <p class="serif text-lg text-cream/90 leading-relaxed">"The chef alone was worth the voyage. We're already planning next summer."</p>
+          <footer class="mt-6 text-sm text-cream/60">— The Chen family, Singapore</footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- Inquiry -->
+  <section id="inquiry" class="py-24 md:py-32 bg-navy">
+    <div class="max-w-[900px] mx-auto px-6 text-center reveal">
+      <p class="text-gold tracking-[0.4em] text-xs uppercase mb-4">Reserve</p>
+      <h2 class="serif text-4xl md:text-6xl text-cream leading-tight">Your voyage begins with a conversation.</h2>
+      <p class="mt-6 text-cream/60 max-w-xl mx-auto">Tell us your dates, your group, and the feeling you're after. We'll return a tailored proposal within 48 hours.</p>
+      <form class="mt-10 grid md:grid-cols-3 gap-4 text-left" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Sent — we will be in touch';">
+        <input type="text" placeholder="Your name" required class="px-5 py-4 rounded-full bg-white/5 border border-gold/20 text-cream placeholder-cream/40 focus:outline-none focus:border-gold">
+        <input type="email" placeholder="Email address" required class="px-5 py-4 rounded-full bg-white/5 border border-gold/20 text-cream placeholder-cream/40 focus:outline-none focus:border-gold">
+        <input type="text" placeholder="Preferred dates" class="px-5 py-4 rounded-full bg-white/5 border border-gold/20 text-cream placeholder-cream/40 focus:outline-none focus:border-gold">
+        <button type="submit" class="md:col-span-3 btn-gold py-4 rounded-full font-semibold tracking-wide">Send Inquiry</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-gold/10 py-12 bg-navy">
+    <div class="max-w-[1280px] mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <svg width="24" height="24" viewBox="0 0 30 30" fill="none" aria-hidden="true"><path d="M3 22 L15 6 L27 22 Z" stroke="#C9A96E" stroke-width="1.5" fill="none"/></svg>
+        <span class="serif text-lg text-cream">Aurelia Yachts</span>
+      </div>
+      <p class="text-xs text-cream/40">© 2026 Aurelia Yachts · Palma de Mallorca · Private charters by appointment</p>
+      <div class="flex gap-6 text-xs text-cream/50">
+        <a href="#" class="hover:text-gold">Privacy</a>
+        <a href="#" class="hover:text-gold">Terms</a>
+        <a href="#" class="hover:text-gold">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+  <script>
+    // reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
