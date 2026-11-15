@@ -8,13 +8,15 @@ These are saved snapshots of sites built in this workspace. **Consult them befor
 | `vinyl-reference.html` | Editorial music/streaming (dark hero video, ticker, discover/library/artists/pricing/play sections, smooth-scroll nav) | The user wants a content-heavy site with multiple sections, a video hero, and smooth in-page navigation. |
 | `fernhollow-reference.html` | (separate finished site — do not delete) | General reference for layout/typography. |
 | `launchpad-reference.html` | Multi-page SaaS landing (index/features/pricing/privacy/terms/404) | The user needs a multi-page site, pricing table, or legal pages. |
+| `alwayzz-react-reference/` | **React + Vite + Tailwind** agency site, custom CSS only (minimal black and white, serif accents, full page section set, accessible drawer, FAQ accordion, stageshow faux product UI) | The user asks for a React project, or a full multi section landing page rather than a single file. |
 
 ## How to use these
 1. Read the closest match(es) before writing any HTML. Look at the design tokens (`:root`), the intro shell, the Lenis+GSAP wiring, the responsive breakpoints, and the verification-relevant details (no horizontal overflow, `overflow-x: hidden`, `#app overflow: clip`).
-2. Adapt the structure and machinery; replace the copy, imagery, and palette with what fits the new brief. Do not copy the Petalyx/Vinyl copy verbatim (headlines are specific to those brands).
+2. Adapt the structure and machinery; replace the copy, imagery, and palette with what fits the new brief. Do not copy the Petalyx/Vinyl/Alwayzz copy verbatim (headlines are specific to those brands).
 3. After building, run the verification checklist in the `website-build-playbook` skill.
 
 ## Notes
 - These are **references, not starters**. Strip what doesn't apply; don't ship a site that still says "Petalyx" or "Vinyl".
+- The `*-reference.html` files are single file sites. `alwayzz-react-reference/` is a **folder** holding a React project (source only, no `node_modules`); start from `src/index.css` and `src/App.jsx`.
 - Petalyx is single-file (`petalyx/index.html` in the repo); vinyl is `vinyl/index.html`.
 - Keep these in sync if a reference site is substantially improved.

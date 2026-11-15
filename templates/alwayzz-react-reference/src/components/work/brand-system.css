@@ -1,0 +1,222 @@
+/* The Sablewood brand system app, drawn in Alwayzz's black and white.
+   All rules live here, including the compact variants. */
+
+.aw-stage {
+  & .ss-stage {
+    --gutter: 28px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: transparent;
+
+    /* Black is the accent, so the app reads as the same studio as the page. */
+    --ss-accent: #0a0a0a;
+    --ss-accent-soft: rgba(10, 10, 10, 0.06);
+    --ss-accent-text: #0a0a0a;
+    --ss-canvas: #f4f4f2;
+    --ss-surface: #ffffff;
+    --ss-well: #eeeeec;
+    --ss-text: #6b6b6b;
+    --ss-text-strong: #0a0a0a;
+    --ss-text-faint: #9a9a9a;
+    --ss-line: rgba(0, 0, 0, 0.08);
+    --ss-line-faint: rgba(0, 0, 0, 0.05);
+  }
+
+  /* The window is pinned with a gutter on the left for the detail card and
+     runs past the right edge, so the crop is a product shot and not a
+     screenshot with air on four sides. */
+  .aw-window {
+    position: absolute;
+    top: var(--gutter);
+    left: var(--gutter);
+    width: 740px;
+    height: 330px;
+    background: var(--ss-surface);
+    border-radius: 12px;
+    box-shadow: var(--ss-shadow-hero);
+  }
+
+  & [data-layout='compact'] .aw-window {
+    left: 16px;
+    width: 430px;
+    height: 300px;
+  }
+
+  .aw-window .ss-window__body {
+    display: flex;
+  }
+
+  .aw-sidebar {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    gap: 4px;
+    width: 132px;
+    padding: 18px 12px;
+    border-right: 1px solid var(--ss-line);
+    background: var(--ss-canvas);
+  }
+
+  & [data-layout='compact'] .aw-sidebar {
+    width: 96px;
+  }
+
+  .aw-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 26px;
+    padding: 0 6px;
+    border-radius: 6px;
+  }
+
+  .aw-nav-label {
+    font-size: 11px;
+    line-height: 14px;
+    color: var(--ss-text);
+  }
+
+  .aw-nav[data-on] .aw-nav-label {
+    color: var(--ss-text-strong);
+    font-weight: 600;
+  }
+
+  .aw-main {
+    flex: 1;
+    min-width: 0;
+    padding: 18px 20px;
+  }
+
+  .aw-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .aw-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ss-text-strong);
+  }
+
+  .aw-chip {
+    font-size: 10.5px;
+  }
+
+  .aw-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .aw-tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 74px;
+    border-radius: 10px;
+    background: var(--ss-canvas);
+    border: 1px solid transparent;
+  }
+
+  .aw-tile.is-selected {
+    background: var(--ss-surface);
+    border-color: var(--ss-text-strong);
+  }
+
+  .aw-wordmark {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--ss-text-strong);
+  }
+
+  .aw-divider {
+    margin: 16px 0 6px;
+  }
+
+  .aw-row {
+    align-content: center;
+    height: 32px;
+  }
+
+  .aw-row .ss-bar:last-child {
+    margin-left: auto;
+  }
+
+  /* The satellite: a level above the window, straddling its lower left edge
+     over filler, clear of the sidebar. */
+  .aw-detail {
+    position: absolute;
+    bottom: var(--gutter);
+    left: var(--gutter);
+    width: 188px;
+    padding: 14px 16px 12px;
+    border-radius: 14px;
+    background: var(--ss-surface);
+    box-shadow: var(--ss-shadow-satellite);
+  }
+
+  & [data-layout='compact'] .aw-detail {
+    left: 16px;
+    width: 168px;
+  }
+
+  .aw-detail-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ss-text-faint);
+  }
+
+  .aw-detail-name {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ss-text-strong);
+  }
+
+  .aw-detail-rule {
+    height: 1px;
+    margin: 12px 0 6px;
+    background: var(--ss-line);
+  }
+
+  .aw-detail-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 26px;
+  }
+
+  .aw-detail-key {
+    font-size: 11px;
+    color: var(--ss-text);
+  }
+
+  .aw-detail-value {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--ss-text-strong);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .aw-detail-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 6px;
+    padding-top: 8px;
+    border-top: 1px solid var(--ss-line);
+  }
+
+  .aw-detail-foot-value {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ss-text-strong);
+  }
+}
